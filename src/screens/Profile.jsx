@@ -7,13 +7,13 @@ import  Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Profile = () => {
   const user = auth.currentUser;
-  // console.log(user);
+  
 
-  const [userInformation, setUserInformation] = useState([]);
+  // const [userInformation, setUserInformation] = useState([]);
 
-  const docSnap = getDoc(doc(db, "users", user.uid)).then((user) => {
-    return setUserInformation(user.data());
-  });
+  // const docSnap = getDoc(doc(db, "users", user.uid)).then((user) => {
+  //   return setUserInformation(user.data());
+  // });
 
   //   console.log(userInformation);
 
