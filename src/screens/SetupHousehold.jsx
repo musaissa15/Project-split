@@ -1,7 +1,8 @@
 import { Button, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
-import { collection, addDoc, doc, updateDoc, getDoc } from 'firebase/firestore'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../../firebase-config'
+import { postHousehold } from '../utils/api'
 
 const SetupHousehold = ({ navigation }) => {
 	const [showForm, setShowForm] = useState(false)
@@ -20,16 +21,8 @@ const SetupHousehold = ({ navigation }) => {
 	
 	const handleSubmit = () => {
 		const user = auth.currentUser;
-        const userId = user ? user.uid : null;
-        const userRef = user ? doc(db, 'users', userId) : null;
 
-		const newHouseholdRef = addDoc(collection(db, 'households'), {'household_name': householdName})
-		
-		newHouseholdRef.then((household) => {
-			if(user) {			
-				return updateDoc(userRef, { household_id: household.id})
-			}
-		}).then(() => {
+		postHousehold(db, user, householdName).then(() => {
 			navigation.navigate("App");
 		})	
 	}
