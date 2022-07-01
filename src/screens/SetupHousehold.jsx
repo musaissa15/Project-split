@@ -35,6 +35,7 @@ const SetupHousehold = ({ navigation }) => {
 	}
 
 	const handleSubmitJoin = () => {
+		const user = auth.currentUser;
         const userId = user ? user.uid : null;
         const userRef = user ? doc(db, 'users', userId) : null;
 		const householdRef = doc(db, 'households', householdId)
