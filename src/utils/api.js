@@ -9,7 +9,7 @@ export const getUserDataById = (db, uid) => {
     if (userData.data()) {
       return userData.data();
     }
-    return Promise.reject( new Error('user not found'));
+    return Promise.reject(new Error('user not found'));
   });
 };
 
@@ -21,7 +21,7 @@ export const postHousehold = (db, user, householdName) => {
   return newHouseholdRef.then((household) => {
     if (user) {
       return updateDoc(userRef, { household_id: household.id });
-    } return Promise.reject( new Error('no logged in user'));
+    } return Promise.reject(new Error('no logged in user'));
   });
 };
 
