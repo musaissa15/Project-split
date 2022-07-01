@@ -1,14 +1,15 @@
 import { Button, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
-import { auth, db } from '../../firebase-config'
-import { postHousehold } from '../utils/api'
+import { patchUserWithHouseholdId, postHousehold } from '../utils/api'
+import CurrentUserContext from '../contexts/CurrentUserContext'
 
 const SetupHousehold = ({ navigation }) => {
 	const [showForm, setShowForm] = useState(false)
 	const [showJoinForm, setShowJoinForm] = useState(false)
 	const [householdName, setHouseholdName] = useState('')
 	const [householdId, setHouseholdId] = useState('')
+	const currentUser = React.useContext(CurrentUserContext)
     
 	const handlePressCreate = () => {
 		setShowForm(true)
@@ -18,30 +19,21 @@ const SetupHousehold = ({ navigation }) => {
 		setShowJoinForm(true)
 	}
     
+	const userId = currentUser ? currentUser.uid : null;
 	
 	const handleSubmit = () => {
-		const user = auth.currentUser;
-
-		postHousehold(db, user, householdName).then(() => {
+		postHousehold(userId, householdName).then(() => {
 			navigation.navigate("App");
 		})	
 	}
 
 	const handleSubmitJoin = () => {
-		const user = auth.currentUser;
-        const userId = user ? user.uid : null;
-        const userRef = user ? doc(db, 'users', userId) : null;
-		const householdRef = doc(db, 'households', householdId)
-		
-		getDoc(householdRef).then((householdSnap) => {
-			if(user && householdSnap.exists()) {		
-				updateDoc(userRef, { household_id: householdId})
+		patchUserWithHouseholdId(userId, householdId)
 					.then(() => {
 						navigation.navigate("App");
 						})
-					}
-		})
 	}
+	
 	
   return (
     <View>

@@ -1,8 +1,9 @@
 import {
   addDoc, collection, doc, getDoc, updateDoc,
 } from 'firebase/firestore';
+import { db } from '../../firebase-config';
 
-export const getUserDataById = (db, uid) => {
+export const getUserDataById = (uid) => {
   const userRef = doc(db, 'users', uid);
 
   return getDoc(userRef).then((userData) => {
@@ -13,18 +14,29 @@ export const getUserDataById = (db, uid) => {
   });
 };
 
-export const postHousehold = (db, user, householdName) => {
-  const userId = user ? user.uid : null;
-  const userRef = user ? doc(db, 'users', userId) : null;
+export const postHousehold = (userId, householdName) => {
+  const userRef = doc(db, 'users', userId);
   const newHouseholdRef = addDoc(collection(db, 'households'), { household_name: householdName });
 
   return newHouseholdRef.then((household) => {
-    if (user) {
+    if (userId) {
       return updateDoc(userRef, { household_id: household.id });
-    } return Promise.reject(new Error('no logged in user'));
+    }
+    return Promise.reject(new Error('no logged in user'));
   });
 };
 
+export const patchUserWithHouseholdId = (userId, householdId) => {
+  const userRef = doc(db, 'users', userId);
+  const householdRef = doc(db, 'households', householdId);
+
+  return getDoc(householdRef).then((householdSnap) => {
+    if (userId && householdSnap.exists()) {
+      return updateDoc(userRef, { household_id: householdId });
+    }
+    return Promise.reject(new Error('no logged in user'));
+  });
+};
 // just here to show how to use function in profile
 
 // const [userData, setUserData] = useState({})
