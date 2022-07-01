@@ -9,10 +9,6 @@ const Profile = () => {
 
   const [userInformation, setUserInformation] = useState([]);
 
-  const docSnap = getDoc(doc(db, "users", user.uid)).then((user) => {
-    return setUserInformation(user.data());
-  });
-
   //   console.log(userInformation);
 
   return (
