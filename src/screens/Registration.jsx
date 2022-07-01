@@ -1,5 +1,5 @@
 import {
-  Button,
+  Pressable,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
@@ -32,23 +32,21 @@ const Registration = ({ navigation }) => {
       <Text style={styles.titleContainer}>Create an Account</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="email..."
+          placeholder="Email"
           value={registerEmail}
           style={styles.input}
           onChangeText={setRegisterEmail}
         />
         <TextInput
           secureTextEntry
-          placeholder="password..."
+          placeholder="Password"
           value={registerPassword}
           style={styles.input}
           onChangeText={setRegisterPassword}
         />
-        <Button
-          containerStyle={styles.button}
-          title="Register"
-          onPress={register}
-        />
+        <Pressable style={styles.button} onPress={register}>
+          <Text style={styles.text}>Register</Text>
+        </Pressable>
       </View>
     </KeyboardAvoidingView>
   );
@@ -64,10 +62,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
   },
-  button: {
-    width: 200,
-    marginTop: 10,
-  },
   inputContainer: {
     width: 300,
   },
@@ -76,6 +70,28 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginBottom: 50,
   },
-
-  input: {},
+  input: {
+    width: 300,
+    backgroundColor: "#ecf0f1",
+    padding: 20,
+    alignItems: "center",
+    fontSize: 20,
+  },
+  button: {
+    marginTop: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "black",
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
 });

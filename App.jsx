@@ -11,6 +11,7 @@ import SetupProfile from "./src/screens/SetupProfile";
 import Login from "./src/screens/Login";
 import { auth, db } from "./firebase-config";
 import { CurrentUserContext } from "./src/contexts/CurrentUserContext";
+import SetupHousehold from "./src/screens/SetupHousehold";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ export default function App() {
           <Stack.Screen name="Register" component={Registration} />
           <Stack.Screen name="App" component={MyTabs} />
           <Stack.Screen name="Setup" component={SetupProfile} />
+          <Stack.Screen name="Setup Household" component={SetupHousehold} />
         </Stack.Navigator>
       </NavigationContainer>
     </CurrentUserContext.Provider>
