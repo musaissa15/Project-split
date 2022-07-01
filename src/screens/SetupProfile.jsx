@@ -38,7 +38,7 @@ const SetupProfile = ({ navigation }) => {
       points: 0,
       badges_achieved: "",
     }).then(() => {
-      navigation.navigate("App");
+      navigation.navigate("Setup Household");
     });
   };
 
