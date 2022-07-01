@@ -9,9 +9,9 @@ import Chores from "./src/screens/Chores";
 import Registration from "./src/screens/Registration";
 import SetupProfile from "./src/screens/SetupProfile";
 import Login from "./src/screens/Login";
-import { auth, db } from "./firebase-config";
-import { CurrentUserContext } from "./src/contexts/CurrentUserContext";
+import CurrentUserContext from "./src/contexts/CurrentUserContext";
 import SetupHousehold from "./src/screens/SetupHousehold";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,16 +25,17 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState({})
   
   useEffect(() => {
-    const userId = auth.currentUser.uid
-    const userRef = doc( db, 'users', userId)
-    getDoc(userRef).then((user) => {
-      setCurrentUser(user)
-    })
-  }, [currentUser])
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setCurrentUser(user)
+      });
+    
+    return unsubscribe
+  }, [])
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }} >
-      <NavigationContainer>
+    <NavigationContainer>
+      <CurrentUserContext.Provider value={currentUser} >
         <Stack.Navigator
           screenOptions={globalScreenOptions}
           initialRouteName="Login"
@@ -46,8 +47,8 @@ export default function App() {
           <Stack.Screen name="Setup" component={SetupProfile} />
           <Stack.Screen name="Setup Household" component={SetupHousehold} />
         </Stack.Navigator>
-      </NavigationContainer>
-    </CurrentUserContext.Provider>
+      </CurrentUserContext.Provider>
+    </NavigationContainer>
   );
 }
 
