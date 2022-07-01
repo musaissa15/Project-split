@@ -69,7 +69,6 @@ const Login = ({ navigation }) => {
           <Text style={styles.text}>Register</Text>
         </Pressable>
       </View>
-
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
   );
