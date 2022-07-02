@@ -1,9 +1,7 @@
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   MaterialCommunityIcons,
-  MaterialIcons,
   FontAwesome,
   Feather,
   Entypo,
@@ -69,5 +67,3 @@ function MyTabs() {
 }
 
 export default MyTabs;
-
-const styles = StyleSheet.create({});
