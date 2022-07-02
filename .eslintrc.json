@@ -21,7 +21,11 @@
     "rules": {
         "quotes": ["error", "double"],
         "no-use-before-define": ["error", { "variables": false }],
-        "react/prop-types": [0, {}]
+        "react/prop-types": [0, {}],
+        "react/style-prop-object": ["error", {
+            "allow": ["StatusBar"]
+          }],
+        "react/no-unescaped-entities": ["error", { "forbid": [">", "\"", "}"] }]
     },
     "ignorePatterns": ["babel.config.js"]
 }
