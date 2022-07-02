@@ -1,5 +1,5 @@
 import {
-  StyleSheet, Text, View, Button,
+  View, Button,
 } from "react-native";
 import React from "react";
 
@@ -23,5 +23,3 @@ function WelcomeScreen({ navigation }) {
 }
 
 export default WelcomeScreen;
-
-const styles = StyleSheet.create({});
