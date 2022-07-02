@@ -1,5 +1,5 @@
 import {
-  StyleSheet, Text, View, KeyboardAvoidingView, Button, TextInput,
+  View, KeyboardAvoidingView, Button, TextInput,
 } from "react-native";
 import React, { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -41,5 +41,3 @@ function Addchore() {
 }
 
 export default Addchore;
-
-const styles = StyleSheet.create({});
