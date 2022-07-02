@@ -1,12 +1,9 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import MyTabs from "./src/screens/NavBar";
-import Chores from "./src/screens/Chores";
 import Registration from "./src/screens/Registration";
 import SetupProfile from "./src/screens/SetupProfile";
 import Login from "./src/screens/Login";
@@ -51,12 +48,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
