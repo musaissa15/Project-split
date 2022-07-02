@@ -1,6 +1,5 @@
 import {
   KeyboardAvoidingView,
-  StyleSheet,
   View,
   TextInput,
   Button,
@@ -76,5 +75,3 @@ function SetupProfile({ navigation }) {
 }
 
 export default SetupProfile;
-
-const styles = StyleSheet.create({});
