@@ -19,7 +19,8 @@
         "react"
     ],
     "rules": {
-        "quotes": ["error", "double"]
+        "quotes": ["error", "double"],
+        "no-use-before-define": ["error", { "variables": false }]
     },
     "ignorePatterns": ["babel.config.js"]
 }
