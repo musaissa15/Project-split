@@ -1,8 +1,7 @@
 import {
-  Button, SafeAreaView, StyleSheet, Text, TextInput, View,
+  Button, SafeAreaView, TextInput, View,
 } from "react-native";
 import React, { useState } from "react";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { patchUserWithHouseholdId, postHousehold } from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
@@ -79,5 +78,3 @@ function SetupHousehold({ navigation }) {
 }
 
 export default SetupHousehold;
-
-const styles = StyleSheet.create({});
