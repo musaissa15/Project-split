@@ -1,16 +1,13 @@
 import {
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   TextInput,
+  KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
-// import { Button, Input, Image } from "react-native-elements";
-import { KeyboardAvoidingView, Pressable } from "react-native";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
 
@@ -18,19 +15,9 @@ function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  //   useEffect(() => {
-  //     const unsubscribe = auth.onAuthStateChanged((authUser) => {
-  //       if (authUser) {
-  //         navigation.replace("App");
-  //       }
-  //     });
-  //     return unsubscribe;
-  //   }, []);
-
   const signIn = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCred) => {
-        const { user } = userCred;
+      .then(() => {
         navigation.navigate("App");
       })
       .catch((err) => {
