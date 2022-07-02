@@ -1,22 +1,13 @@
 import { StyleSheet, View, SafeAreaView } from "react-native";
-import React, { useState } from "react";
-import { collection, doc, getDoc } from "firebase/firestore";
+import React from "react";
 import {
   Avatar, Text, Title, Caption, TouchableRipple,
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { auth, db } from "../../firebase-config";
+import { auth } from "../../firebase-config";
 
 function Profile() {
   const user = auth.currentUser;
-
-  // const [userInformation, setUserInformation] = useState([]);
-
-  // const docSnap = getDoc(doc(db, "users", user.uid)).then((user) => {
-  //   return setUserInformation(user.data());
-  // });
-
-  //   console.log(userInformation);
 
   return (
     <SafeAreaView style={styles.userInfoSection}>
