@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const Chores = () => {
+function Chores() {
   return (
     <View>
       <Text>Chores</Text>
     </View>
   );
-};
+}
 
 export default Chores;
 

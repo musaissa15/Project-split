@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import MyTabs from "./src/screens/NavBar";
 import Chores from "./src/screens/Chores";
@@ -11,7 +12,6 @@ import SetupProfile from "./src/screens/SetupProfile";
 import Login from "./src/screens/Login";
 import CurrentUserContext from "./src/contexts/CurrentUserContext";
 import SetupHousehold from "./src/screens/SetupHousehold";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,21 +21,21 @@ export default function App() {
     headerTitleStyle: { color: "white" },
     headerTintColor: "white",
   };
-  
-  const [currentUser, setCurrentUser] = useState({})
-  
+
+  const [currentUser, setCurrentUser] = useState({});
+
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setCurrentUser(user)
-      });
-    
-    return unsubscribe
-  }, [])
+      setCurrentUser(user);
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
     <NavigationContainer>
-      <CurrentUserContext.Provider value={currentUser} >
+      <CurrentUserContext.Provider value={currentUser}>
         <Stack.Navigator
           screenOptions={globalScreenOptions}
           initialRouteName="Login"

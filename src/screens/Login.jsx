@@ -10,11 +10,11 @@ import React, { useEffect, useState } from "react";
 // import { Button, Input, Image } from "react-native-elements";
 import { KeyboardAvoidingView, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { auth } from "../../firebase-config";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase-config";
 
-const Login = ({ navigation }) => {
+function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,7 +30,7 @@ const Login = ({ navigation }) => {
   const signIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCred) => {
-        const user = userCred.user;
+        const { user } = userCred;
         navigation.navigate("App");
       })
       .catch((err) => {
@@ -73,7 +73,7 @@ const Login = ({ navigation }) => {
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
   );
-};
+}
 
 export default Login;
 

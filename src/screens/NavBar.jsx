@@ -15,7 +15,7 @@ import AddChore from "./AddChore";
 
 const Tab = createBottomTabNavigator();
 
-const MyTabs = () => {
+function MyTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Profile"
@@ -66,7 +66,7 @@ const MyTabs = () => {
       />
     </Tab.Navigator>
   );
-};
+}
 
 export default MyTabs;
 

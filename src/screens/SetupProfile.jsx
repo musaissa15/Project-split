@@ -7,17 +7,16 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
-import { auth } from "../../firebase-config";
-import { db } from "../../firebase-config";
 import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "../../firebase-config";
 
-const SetupProfile = ({ navigation }) => {
-  //form user input data
+function SetupProfile({ navigation }) {
+  // form user input data
   const [firstname, setFirstname] = useState("");
   const [surname, setSurname] = useState("");
   const [username, setUsername] = useState("");
 
-  //dropdown avatar items
+  // dropdown avatar items
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -25,7 +24,7 @@ const SetupProfile = ({ navigation }) => {
     { label: "Banana", value: "banana" },
   ]);
 
-  //create document with current user uid
+  // create document with current user uid
   const updateUser = () => {
     const user = auth.currentUser;
     setDoc(doc(db, "users", user.uid), {
@@ -33,7 +32,7 @@ const SetupProfile = ({ navigation }) => {
       first_name: firstname,
       last_name: surname,
       email: user.email,
-      username: username,
+      username,
       household_id: "",
       points: 0,
       badges_achieved: "",
@@ -74,7 +73,7 @@ const SetupProfile = ({ navigation }) => {
       </View>
     </KeyboardAvoidingView>
   );
-};
+}
 
 export default SetupProfile;
 

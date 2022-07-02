@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  StyleSheet, Text, View, Button,
+} from "react-native";
 import React from "react";
 
-const WelcomeScreen = ({ navigation }) => {
+function WelcomeScreen({ navigation }) {
   return (
     <View>
       <Button
@@ -18,7 +20,7 @@ const WelcomeScreen = ({ navigation }) => {
       />
     </View>
   );
-};
+}
 
 export default WelcomeScreen;
 

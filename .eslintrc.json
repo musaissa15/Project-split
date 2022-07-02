@@ -19,5 +19,7 @@
         "react"
     ],
     "rules": {
-    }
+        "quotes": ["error", "double"]
+    },
+    "ignorePatterns": ["babel.config.js"]
 }

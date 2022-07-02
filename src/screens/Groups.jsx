@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const Groups = () => {
+function Groups() {
   return (
     <View>
       <Text>Groups</Text>
     </View>
   );
-};
+}
 
 export default Groups;
 

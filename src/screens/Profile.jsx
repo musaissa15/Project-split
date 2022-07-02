@@ -1,13 +1,14 @@
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
-import { auth, db } from "../../firebase-config";
 import { collection, doc, getDoc } from "firebase/firestore";
-import { Avatar, Text, Title, Caption, TouchableRipple } from "react-native-paper";
-import  Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import {
+  Avatar, Text, Title, Caption, TouchableRipple,
+} from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { auth, db } from "../../firebase-config";
 
-const Profile = () => {
+function Profile() {
   const user = auth.currentUser;
-  
 
   // const [userInformation, setUserInformation] = useState([]);
 
@@ -19,91 +20,88 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={styles.userInfoSection}>
-<View style={styles.userInfoSection}>
-<View style={{flexDirection: 'row', marginTop: 15}}>
-      <Avatar.Image 
-        source={{
-          uri: "https://previews.123rf.com/images/gmast3r/gmast3r1411/gmast3r141100280/33645487-profile-icon-male-avatar-portrait-casual-person.jpg",
-        }}
-        size={80}
-      />
-      <View style={{marginLeft: 20}}>
-        <Title style={[styles.title, {
-          marginTop:15,
-          marginBottom: 5,
-        }]}>{user.uid}</Title>
-        <Caption style={styles.caption}>{user.email}</Caption>
-      </View>
-    </View>
-  </View>
-
-  <View style={styles.userInfoSection}>
-
-
-    <View styles={styles.row}>
-    <Icon name="medal" color="#777777" size={20}/>
-    <Text style={{color:"#777777", marginLeft: 20}}>{user.badges_achieved}</Text>
-    </View>
-
-<View styles={styles.row}>
-    <Icon name="home-account" color="#777777" size={20}/>
-    <Text style={{color:"#777777", marginLeft: 20}}>{user.household_id}</Text>
-    </View>
-
-    <View styles={styles.row}>
-    <Icon name="trophy" color="#777777" size={20}/>
-    <Text style={{color:"#777777", marginLeft: 20}}>{user.points}</Text>
-    </View>
-  </View>
-
-  <View style={styles.infoBoxWrapper}>
-          <View style={[styles.infoBox, {
-            borderRightColor: '#dddddd',
-            borderRightWidth: 1
-          }]}>
-            <Title>#1</Title>
-            <Caption>Household_Northcoders</Caption>
+      <View style={styles.userInfoSection}>
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+          <Avatar.Image
+            source={{
+              uri: "https://previews.123rf.com/images/gmast3r/gmast3r1411/gmast3r141100280/33645487-profile-icon-male-avatar-portrait-casual-person.jpg",
+            }}
+            size={80}
+          />
+          <View style={{ marginLeft: 20 }}>
+            <Title style={[styles.title, {
+              marginTop: 15,
+              marginBottom: 5,
+            }]}
+            >
+              {user.uid}
+            </Title>
+            <Caption style={styles.caption}>{user.email}</Caption>
           </View>
-          <View style={styles.infoBox}>
-            <Title>100</Title>
-            <Caption>Points</Caption>
-          </View>
+        </View>
       </View>
 
-<View style={styles.listWrapper}>
-  <TouchableRipple onPress={() => {}}>
-    <View style={styles.listItem}>
-    <Icon name="washing-machine" color="#777777" size={25}/>
-    <Text style={styles.listItemText}>Your Favourite Chores</Text>
-    </View>
-  </TouchableRipple>
+      <View style={styles.userInfoSection}>
 
+        <View styles={styles.row}>
+          <Icon name="medal" color="#777777" size={20} />
+          <Text style={{ color: "#777777", marginLeft: 20 }}>{user.badges_achieved}</Text>
+        </View>
 
-  <TouchableRipple onPress={() => {}}>
-    <View style={styles.listItem}>
-    <Icon name="settings-outline" color="#777777" size={25}/>
-    <Text style={styles.listItemText}>Settings</Text>
-    </View>
-  </TouchableRipple>
+        <View styles={styles.row}>
+          <Icon name="home-account" color="#777777" size={20} />
+          <Text style={{ color: "#777777", marginLeft: 20 }}>{user.household_id}</Text>
+        </View>
 
-  <TouchableRipple onPress={() => {}}>
-    <View style={styles.listItem}>
-    <Icon name="logout" color="#777777" size={25}/>
-    <Text style={styles.listItemText}>Logout</Text>
-    </View>
-  </TouchableRipple>
+        <View styles={styles.row}>
+          <Icon name="trophy" color="#777777" size={20} />
+          <Text style={{ color: "#777777", marginLeft: 20 }}>{user.points}</Text>
+        </View>
+      </View>
 
+      <View style={styles.infoBoxWrapper}>
+        <View style={[styles.infoBox, {
+          borderRightColor: "#dddddd",
+          borderRightWidth: 1,
+        }]}
+        >
+          <Title>#1</Title>
+          <Caption>Household_Northcoders</Caption>
+        </View>
+        <View style={styles.infoBox}>
+          <Title>100</Title>
+          <Caption>Points</Caption>
+        </View>
+      </View>
 
+      <View style={styles.listWrapper}>
+        <TouchableRipple onPress={() => {}}>
+          <View style={styles.listItem}>
+            <Icon name="washing-machine" color="#777777" size={25} />
+            <Text style={styles.listItemText}>Your Favourite Chores</Text>
+          </View>
+        </TouchableRipple>
 
-</View>
+        <TouchableRipple onPress={() => {}}>
+          <View style={styles.listItem}>
+            <Icon name="settings-outline" color="#777777" size={25} />
+            <Text style={styles.listItemText}>Settings</Text>
+          </View>
+        </TouchableRipple>
 
+        <TouchableRipple onPress={() => {}}>
+          <View style={styles.listItem}>
+            <Icon name="logout" color="#777777" size={25} />
+            <Text style={styles.listItemText}>Logout</Text>
+          </View>
+        </TouchableRipple>
 
-      
+      </View>
 
-   </SafeAreaView>
-  
+    </SafeAreaView>
+
   );
-};
+}
 
 export default Profile;
 
@@ -117,46 +115,46 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 10,
   },
 
   infoBoxWrapper: {
-    borderBottomColor: '#dddddd',
+    borderBottomColor: "#dddddd",
     borderBottomWidth: 1,
-    borderTopColor: '#dddddd',
+    borderTopColor: "#dddddd",
     borderTopWidth: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 100,
   },
 
   infoBox: {
-    width: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   listWrapper: {
     marginTop: 10,
   },
   listItem: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 15,
     paddingHorizontal: 30,
   },
   listItemText: {
-    color: '#777777',
+    color: "#777777",
     marginLeft: 20,
-    fontWeight: '600',
+    fontWeight: "600",
     fontSize: 16,
     lineHeight: 26,
   },
