@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import React from "react";
 
 function Chores() {
@@ -10,5 +10,3 @@ function Chores() {
 }
 
 export default Chores;
-
-const styles = StyleSheet.create({});
