@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import React from "react";
 
 function Groups() {
@@ -10,5 +10,3 @@ function Groups() {
 }
 
 export default Groups;
-
-const styles = StyleSheet.create({});
