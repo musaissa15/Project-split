@@ -1,13 +1,15 @@
 import { Button, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
-import { collection, addDoc, doc, updateDoc, getDoc } from 'firebase/firestore'
-import { auth, db } from '../../firebase-config'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
+import { patchUserWithHouseholdId, postHousehold } from '../utils/api'
+import CurrentUserContext from '../contexts/CurrentUserContext'
 
 const SetupHousehold = ({ navigation }) => {
 	const [showForm, setShowForm] = useState(false)
 	const [showJoinForm, setShowJoinForm] = useState(false)
 	const [householdName, setHouseholdName] = useState('')
 	const [householdId, setHouseholdId] = useState('')
+	const currentUser = React.useContext(CurrentUserContext)
     
 	const handlePressCreate = () => {
 		setShowForm(true)
@@ -17,38 +19,21 @@ const SetupHousehold = ({ navigation }) => {
 		setShowJoinForm(true)
 	}
     
+	const userId = currentUser ? currentUser.uid : null;
 	
 	const handleSubmit = () => {
-		const user = auth.currentUser;
-        const userId = user ? user.uid : null;
-        const userRef = user ? doc(db, 'users', userId) : null;
-
-		const newHouseholdRef = addDoc(collection(db, 'households'), {'household_name': householdName})
-		
-		newHouseholdRef.then((household) => {
-			if(user) {			
-				return updateDoc(userRef, { household_id: household.id})
-			}
-		}).then(() => {
+		postHousehold(userId, householdName).then(() => {
 			navigation.navigate("App");
 		})	
 	}
 
 	const handleSubmitJoin = () => {
-		const user = auth.currentUser;
-        const userId = user ? user.uid : null;
-        const userRef = user ? doc(db, 'users', userId) : null;
-		const householdRef = doc(db, 'households', householdId)
-		
-		getDoc(householdRef).then((householdSnap) => {
-			if(user && householdSnap.exists()) {		
-				updateDoc(userRef, { household_id: householdId})
+		patchUserWithHouseholdId(userId, householdId)
 					.then(() => {
 						navigation.navigate("App");
 						})
-					}
-		})
 	}
+	
 	
   return (
     <View>

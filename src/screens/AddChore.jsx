@@ -17,9 +17,11 @@ const Addchore = () => {
   const [choreName, setChoreName] = useState("");
   const [choreDescription, setChoreDescription] = useState("")
   const [open, setOpen] = useState(false);
-   const [openDifficulty, setOpenDifficulty] = useState(false);
+  const [openDifficulty, setOpenDifficulty] = useState(false)
   const [value, setValue] = useState(null);
- const [difficultyValue, setDifficultyValue] = useState(false);
+  const [difficultyValue, setDifficultyValue] = useState(false)
+  const [day, setDay] = useState('')
+   const [month, setMonth] = useState('');
   const [items, setItems] = useState([
     { label: "Daily", value: "daily" },
     { label: "Weekly", value: "weekly" },
@@ -33,9 +35,10 @@ const Addchore = () => {
 		{ label: "5", value: 5 },
 	]);
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  
 
   const postchore = () => {};
+  
 
   return (
 		<KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -55,6 +58,30 @@ const Addchore = () => {
 					value={choreDescription}
 					onChangeText={setChoreDescription}
 				/>
+
+				<TextInput
+					style={styles.input}
+					placeholder="Day"
+					value={day}
+					onChangeText={setDay}
+					maxLength={2}
+					keyboardType={"number-pad"}
+				/>
+
+				<TextInput
+					style={styles.input}
+					placeholder="Month"
+					value={month}
+					onChangeText={setMonth}
+					maxLength={2}
+					keyboardType={"number-pad"}
+				/>
+
+				{
+					//TODOS make input fields for the day and month and year(year wont be displayed)
+					//TODOS set the state for the day and the month the ch
+					//TODOS
+				}
 
 				<DropDownPicker
 					open={open}
