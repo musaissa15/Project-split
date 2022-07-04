@@ -1,13 +1,32 @@
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { StyleSheet, View, SafeAreaView, Switch, Dimensions, Pressable, Image, ScrollView  } from "react-native";
 import React, { useState } from "react";
 import { auth, db } from "../../firebase-config";
 import { collection, doc, getDoc } from "firebase/firestore";
-import { Avatar, Text, Title, Caption, TouchableRipple } from "react-native-paper";
+import { Avatar, Text, Title, Caption, TouchableRipple} from "react-native-paper";
 import  Icon from "react-native-vector-icons/MaterialCommunityIcons";
+const {width} = Dimensions.get('screen');
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+  const [mode, setMode] = useState(false);
   const user = auth.currentUser;
-  
+
+  const ListOptions = () => {
+    const optionsList = [
+      {title: 'Your Badges', },
+      ]
+
+
+    return <View style={styles.optionListContainer}>
+      {optionsList.map((option, index) => (
+        <View style={styles.optionsCard} key={index}>
+
+<Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
+              {option.title}
+            </Text>
+        </View>
+      ))}
+    </View>
+  } 
 
   // const [userInformation, setUserInformation] = useState([]);
 
@@ -31,7 +50,7 @@ const Profile = () => {
         <Title style={[styles.title, {
           marginTop:15,
           marginBottom: 5,
-        }]}>{user.uid}</Title>
+        }]}>{user.username}</Title>
         <Caption style={styles.caption}>{user.email}</Caption>
       </View>
     </View>
@@ -78,30 +97,12 @@ const Profile = () => {
     </View>
   </TouchableRipple>
 
-
-  <TouchableRipple onPress={() => {}}>
-    <View style={styles.listItem}>
-    <Icon name="settings-outline" color="#777777" size={25}/>
-    <Text style={styles.listItemText}>Settings</Text>
-    </View>
-  </TouchableRipple>
-
-  <TouchableRipple onPress={() => {}}>
-    <View style={styles.listItem}>
-    <Icon name="logout" color="#777777" size={25}/>
-    <Text style={styles.listItemText}>Logout</Text>
-    </View>
-  </TouchableRipple>
-
-
+  <Switch value={mode} onValueChange={() => setMode((value) => !value)}/>
+<ListOptions />
+ 
 
 </View>
-
-
-      
-
-   </SafeAreaView>
-  
+</SafeAreaView>
   );
 };
 
@@ -160,5 +161,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 26,
   },
+  optionsCard: {
+    height: 150,
+    // width:  - 30,
+    elevation: 15,
+    alignItems: 'center',
+    backgroundColor: "white",
+     borderRadius: 10,
+    // paddingTop: 10,
+    paddingHorizontal: 10,
+  },
+  optionListsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    paddingHorizontal: 20,
+  },
+
+
+
+
+
 
 });
+
+

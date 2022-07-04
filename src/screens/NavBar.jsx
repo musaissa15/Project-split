@@ -7,11 +7,14 @@ import {
   FontAwesome,
   Feather,
   Entypo,
+  Ionicons,
 } from "@expo/vector-icons";
 import Profile from "./Profile";
 import Groups from "./Groups";
 import Chores from "./Chores";
 import AddChore from "./AddChore";
+import SettingsScreen from "./SettingsScreen";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +23,11 @@ const MyTabs = () => {
     <Tab.Navigator
       initialRouteName="Profile"
       screenOptions={{
-        tabBarActiveTintColor: "#E91E63",
+        tabBarShowLabel: false,
+        headerShown: true,
+        tabBarStyle: {backgroundColor: "#A7C4BC"},
+        tabBarInactiveTintColor: "#fff", 
+        tabBarActiveTintColor: "black",
       }}
     >
       <Tab.Screen
@@ -29,7 +36,7 @@ const MyTabs = () => {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <Ionicons name="person-outline" color={color} size={size} />
           ),
         }}
       />
@@ -39,9 +46,9 @@ const MyTabs = () => {
         options={{
           tabBarLabel: "Groups",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="group" color={color} size={size} />
+            <Ionicons name="people-outline" color={color} size={size} />
           ),
-          tabBarBadge: 3,
+          // tabBarBadge: 3,
         }}
       />
       <Tab.Screen
@@ -50,7 +57,7 @@ const MyTabs = () => {
         options={{
           tabBarLabel: "Chores",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="list" color={color} size={size} />
+            <Ionicons name="list-outline" color={color} size={size} />
           ),
         }}
       />
@@ -64,10 +71,26 @@ const MyTabs = () => {
           ),
         }}
       />
+
+<Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: "Settings",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="settings" color={color} size={size} />
+          ),
+        }}
+      />
+
+
+      
     </Tab.Navigator>
   );
 };
 
 export default MyTabs;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+ 
+});
