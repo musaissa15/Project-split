@@ -9,6 +9,7 @@ import {
   query,
   where,
   Timestamp,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 
@@ -98,6 +99,11 @@ export const postChore = (userId, {
     });
   });
 };
+
+export const deleteChore = (choreId) => {
+  const choreRef = doc(db, 'chores', choreId);
+  return deleteDoc(choreRef);
+}
 
 // just here to show how to use function in profile
 
