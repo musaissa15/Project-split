@@ -39,8 +39,8 @@ export const patchUserWithHouseholdId = (userId, householdId) => {
   });
 };
 
-export const createAuthUser = (email, password) => {
-  createUserWithEmailAndPassword(auth, email, password);
+export const postAuthUser = (email, password) => {
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 
 // just here to show how to use function in profile

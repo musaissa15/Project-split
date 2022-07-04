@@ -8,14 +8,14 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { createAuthUser } from "../utils/api";
+import { postAuthUser } from "../utils/api";
 
 const Registration = ({ navigation }) => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
 
   const register = () => {
-    createAuthUser( registerEmail, registerPassword )
+    postAuthUser( registerEmail, registerPassword )
       .then(() => {
         navigation.navigate("Setup");
       })
