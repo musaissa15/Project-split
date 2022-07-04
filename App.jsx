@@ -38,7 +38,7 @@ export default function App() {
       <CurrentUserContext.Provider value={currentUser} >
         <Stack.Navigator
           screenOptions={globalScreenOptions}
-          initialRouteName="Welcome"
+          initialRouteName="Login"
         >
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
