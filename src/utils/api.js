@@ -56,7 +56,7 @@ export const getChoresByHouseholdId = (currentUser) => {
   const userId = currentUser ? currentUser.uid : null;
 
   return getUserDataById(userId)
-    .then(( userData ) => {
+    .then((userData) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "chores"),
