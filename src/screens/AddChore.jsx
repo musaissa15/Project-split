@@ -12,6 +12,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { StatusBar } from "expo-status-bar";
 // import DatePicker from "../components/DatePicker"
 import { Button } from "react-native-web";
+import {postChore} from "../utils/api";
 
 const Addchore = () => {
   const [choreName, setChoreName] = useState("");
@@ -37,7 +38,18 @@ const Addchore = () => {
 
   
 
-  const addChore = () => {};
+  const addChore = () => {
+    postChore("6b4fR5AjYiTTWXmpxiHGOISOUuv2", {
+			choreName,
+			choreDescription,
+			difficulty: difficultyValue,
+			day,
+			month,
+			usersAssigned: ["6b4fR5AjYiTTWXmpxiHGOISOUuv2"],
+    }).then(() => {
+      console.log("result")
+    })
+  };
   
 
   return (
