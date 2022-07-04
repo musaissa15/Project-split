@@ -37,7 +37,7 @@ const Addchore = () => {
 
   
 
-  const postchore = () => {};
+  const addChore = () => {};
   
 
   return (
@@ -100,7 +100,7 @@ const Addchore = () => {
 					setValue={setDifficultyValue}
 					setItems={setDifficulty}
 				/>
-				<Pressable style={styles.button} onPress={postchore}>
+				<Pressable style={styles.button} onPress={addChore}>
 					<Text style={styles.text}>Add</Text>
 				</Pressable>
 			</View>
