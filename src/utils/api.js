@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -79,9 +79,10 @@ export const getChoresByHouseholdId = (currentUser) => {
 export const postChore = (userId, {
   choreName, choreDescription, difficulty, day, month, usersAssigned,
 }) => {
-  return getUserDataById(userId).then(({ household_id }) => {
+  return getUserDataById(userId).then((userData) => {
+    const householdId = userData.household_id;
     const currentYear = new Date().getFullYear();
-    const dueDate = new Date(currentYear, parseInt(month) - 1, parseInt(day));
+    const dueDate = new Date(currentYear, parseInt(month, 10) - 1, parseInt(day, 10));
     const dueDateTimeStamp = Timestamp.fromDate(dueDate);
     addDoc(collection(db, "chores"), {
       chore_name: choreName,
@@ -90,7 +91,7 @@ export const postChore = (userId, {
       due_date: dueDateTimeStamp,
       is_completed: false,
       created_by: userId,
-      household_id,
+      household_id: householdId,
       image_url: "",
       votes: 0,
       users_assigned: usersAssigned,
