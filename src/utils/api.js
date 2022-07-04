@@ -101,9 +101,9 @@ export const postChore = (userId, {
 };
 
 export const deleteChore = (choreId) => {
-  const choreRef = doc(db, 'chores', choreId);
+  const choreRef = doc(db, "chores", choreId);
   return deleteDoc(choreRef);
-}
+};
 
 // just here to show how to use function in profile
 
