@@ -76,16 +76,17 @@ export const getChoresByHouseholdId = (currentUser) => {
     });
 };
 
-export const postChore = (userId, {choreName, choreDescription, difficulty, day, month, usersAssigned}) => {
-  return getUserDataById(userId
-  ).then(({household_id}) => {
-    const currentYear = new Date().getFullYear()
-    const dueDate = new Date(currentYear, parseInt(month) - 1, parseInt(day))
-    const dueDateTimeStamp = Timestamp.fromDate(dueDate)
+export const postChore = (userId, {
+  choreName, choreDescription, difficulty, day, month, usersAssigned,
+}) => {
+  return getUserDataById(userId).then(({ household_id }) => {
+    const currentYear = new Date().getFullYear();
+    const dueDate = new Date(currentYear, parseInt(month) - 1, parseInt(day));
+    const dueDateTimeStamp = Timestamp.fromDate(dueDate);
     addDoc(collection(db, "chores"), {
       chore_name: choreName,
       description: choreDescription,
-      difficulty: difficulty,
+      difficulty,
       due_date: dueDateTimeStamp,
       is_completed: false,
       created_by: userId,
@@ -94,10 +95,8 @@ export const postChore = (userId, {choreName, choreDescription, difficulty, day,
       votes: 0,
       users_assigned: usersAssigned,
     });
-  })
-}
-
-
+  });
+};
 
 // just here to show how to use function in profile
 
