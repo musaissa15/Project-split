@@ -7,16 +7,15 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase-config";
 import { StatusBar } from "expo-status-bar";
+import { postAuthUser } from "../utils/api";
 
 const Registration = ({ navigation }) => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
 
   const register = () => {
-    createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
+    postAuthUser( registerEmail, registerPassword )
       .then(() => {
         navigation.navigate("Setup");
       })

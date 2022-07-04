@@ -1,7 +1,8 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {
   addDoc, collection, doc, getDoc, updateDoc,
 } from 'firebase/firestore';
-import { db } from '../../firebase-config';
+import { auth, db } from '../../firebase-config';
 
 export const getUserDataById = (uid) => {
   const userRef = doc(db, 'users', uid);
@@ -37,6 +38,11 @@ export const patchUserWithHouseholdId = (userId, householdId) => {
     return Promise.reject(new Error('no logged in user'));
   });
 };
+
+export const postAuthUser = (email, password) => {
+  return createUserWithEmailAndPassword(auth, email, password);
+};
+
 // just here to show how to use function in profile
 
 // const [userData, setUserData] = useState({})
