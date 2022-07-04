@@ -1,6 +1,13 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
-  addDoc, collection, doc, getDoc, updateDoc,
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+  getDocs,
+  query,
+  where,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 
@@ -17,7 +24,9 @@ export const getUserDataById = (uid) => {
 
 export const postHousehold = (userId, householdName) => {
   const userRef = doc(db, "users", userId);
-  const newHouseholdRef = addDoc(collection(db, "households"), { household_name: householdName });
+  const newHouseholdRef = addDoc(collection(db, "households"), {
+    household_name: householdName,
+  });
 
   return newHouseholdRef.then((household) => {
     if (userId) {
@@ -41,6 +50,29 @@ export const patchUserWithHouseholdId = (userId, householdId) => {
 
 export const postAuthUser = (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const getChoresByHouseholdId = (currentUser) => {
+  const userId = currentUser ? currentUser.uid : null;
+
+  return getUserDataById(userId)
+    .then((userData) => {
+      const householdId = userData.household_id;
+      const q = query(
+        collection(db, "chores"),
+        where("household_id", "==", householdId),
+      );
+      return getDocs(q);
+    })
+    .then((chores) => {
+      const choresArray = [];
+
+      chores.forEach((chore) => {
+        choresArray.push(chore.data());
+      });
+
+      return choresArray;
+    });
 };
 
 // just here to show how to use function in profile
