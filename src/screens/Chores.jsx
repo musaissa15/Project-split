@@ -1,10 +1,21 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import { getChoresByHouseholdId } from "../utils/api";
 
 const Chores = () => {
+  const currentUser = React.useContext(CurrentUserContext);
+  const [householdChores, setHouseholdChores] = useState([]);
+
+  useEffect(() => {
+    getChoresByHouseholdId(currentUser).then((chores) => {
+      setHouseholdChores(chores);
+    });
+  }, []);
+
   return (
     <View>
-      <Text>Chores</Text>
+
     </View>
   );
 };
