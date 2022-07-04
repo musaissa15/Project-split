@@ -19,6 +19,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import { postAuthUser } from "../utils/api";
 
 
 const Registration = ({navigation}) => {
@@ -34,7 +35,7 @@ useLayoutEffect(() => {
 
 
   const register = () => {
-    createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
+    postAuthUser(registerEmail, registerPassword)
       .then(() => {
         navigation.navigate("Setup");
       })
