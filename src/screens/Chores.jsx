@@ -16,7 +16,7 @@ const Chores = () => {
   }, []);
 
   return (
-      <ScrollView>
+      <ScrollView style={styles.back}>
       {householdChores.map((chore) => {
         return <ChoreCard chore={chore} key={chore.chore_id} />;
       })}
@@ -26,4 +26,8 @@ const Chores = () => {
 
 export default Chores;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  back: {
+    backgroundColor: "#2F5D62",
+  }
+});

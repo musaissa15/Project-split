@@ -17,7 +17,7 @@ const ChoreModal = ({ modalVisible, setModalVisible, chore }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{chore.chore_name}</Text>
+            <Text style={styles.modalTitle}>{chore.chore_name}</Text>
             <Text style={styles.modalText}>{chore.description}</Text>
             <Text style={styles.modalText}>
               {chore.users_assigned.map((user) => user)}
@@ -76,13 +76,14 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
     padding: 10,
+    marginHorizontal: 5,
     elevation: 2,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#2F5D62",
   },
   textStyle: {
     color: "white",
