@@ -60,7 +60,7 @@ export const getChoresByHouseholdId = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "chores"),
-        where("household_id", "==", householdId)
+        where("household_id", "==", householdId),
       );
       return getDocs(q);
     })
@@ -83,7 +83,7 @@ export const getUsersByHousehold = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "users"),
-        where("household_id", "==", householdId)
+        where("household_id", "==", householdId),
       );
       return getDocs(q);
     })
