@@ -22,6 +22,17 @@ export const getUserDataById = (uid) => {
   });
 };
 
+export const getHouseholdbyUser = (householdId) => {
+  const userRef = doc(db, "households", householdId);
+
+  return getDoc(userRef).then((householdData) => {
+    if (householdData.data()) {
+      return householdData.data();
+    }
+    return Promise.reject(new Error("data not found"));
+  });
+};
+
 export const postHousehold = (userId, householdName) => {
   const userRef = doc(db, "users", userId);
   const newHouseholdRef = addDoc(collection(db, "households"), {
@@ -79,6 +90,40 @@ export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
 
   return updateDoc(choreRef, {
     is_completed: !isCompleted,
+  });
+};
+
+export const getUsersByHousehold = (currentUser) => {
+  const userId = currentUser ? currentUser.uid : null;
+
+  return getUserDataById(userId)
+    .then((userData) => {
+      const householdId = userData.household_id;
+      const q = query(
+        collection(db, "users"),
+        where("household_id", "==", householdId),
+      );
+      return getDocs(q);
+    })
+    .then((users) => {
+      const usersArray = [];
+
+      users.forEach((user) => {
+        usersArray.push(user.data());
+      });
+
+      return usersArray;
+    });
+};
+
+export const getBadges = (badgeId) => {
+  const badgeRef = doc(db, "badges", badgeId);
+
+  return getDoc(badgeRef).then((badges) => {
+    if (badges.data()) {
+      return badges.data();
+    }
+    return Promise.reject(new Error("user not found"));
   });
 };
 
