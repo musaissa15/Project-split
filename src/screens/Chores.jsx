@@ -18,7 +18,7 @@ const Chores = () => {
   return (
       <ScrollView>
       {householdChores.map((chore) => {
-        return <ChoreCard chore={chore} key={chore.chore_name} />;
+        return <ChoreCard chore={chore} key={chore.chore_id} />;
       })}
       </ScrollView> 
   );
