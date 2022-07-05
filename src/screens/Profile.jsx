@@ -1,108 +1,149 @@
-import { StyleSheet, View, SafeAreaView, Switch, Dimensions, Pressable, Image, ScrollView  } from "react-native";
-import React, { useState } from "react";
-import { auth, db } from "../../firebase-config";
-import { collection, doc, getDoc } from "firebase/firestore";
-import { Avatar, Text, Title, Caption, TouchableRipple} from "react-native-paper";
-import  Icon from "react-native-vector-icons/MaterialCommunityIcons";
-const {width} = Dimensions.get('screen');
+import { StyleSheet, View, SafeAreaView, Dimensions } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Avatar,
+  Text,
+  Title,
+  Caption,
+  TouchableRipple,
+} from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import { getBadges, getUserDataById } from "../utils/api";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase-config";
+const { width } = Dimensions.get("screen");
 
 const Profile = ({ navigation }) => {
   const [mode, setMode] = useState(false);
-  const user = auth.currentUser;
+  const [user, setUser] = useState({});
+  const [userBadges, setUserBadges] = useState([]);
+
+  const userData = useContext(CurrentUserContext);
+  useEffect(() => {
+    getUserDataById(userData.uid).then((res) => {
+      setUser(res);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (user.badges_achieved) {
+      const badge = user.badges_achieved;
+      // console.log(badge);
+
+      badge.forEach((b) => {
+        getBadges(b).then((res) => {
+          setUserBadges((curr) => {
+            return [...curr, res];
+          });
+        });
+      });
+    }
+  }, [user]);
 
   const ListOptions = () => {
-    const optionsList = [
-      {title: 'Your Badges', },
-      ]
+    const optionsList = [{ title: "Your Badges" }];
 
-
-    return <View style={styles.optionListContainer}>
-      {optionsList.map((option, index) => (
-        <View style={styles.optionsCard} key={index}>
-
-<Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
+    return (
+      <View style={styles.optionListContainer}>
+        {optionsList.map((option, index) => (
+          <View style={styles.optionsCard} key={index}>
+            <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
               {option.title}
             </Text>
-        </View>
-      ))}
-    </View>
-  } 
-
-  // const [userInformation, setUserInformation] = useState([]);
-
-  // const docSnap = getDoc(doc(db, "users", user.uid)).then((user) => {
-  //   return setUserInformation(user.data());
-  // });
-
-  //   console.log(userInformation);
+          </View>
+        ))}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.userInfoSection}>
-<View style={styles.userInfoSection}>
-<View style={{flexDirection: 'row', marginTop: 15}}>
-      <Avatar.Image 
-        source={{
-          uri: "https://previews.123rf.com/images/gmast3r/gmast3r1411/gmast3r141100280/33645487-profile-icon-male-avatar-portrait-casual-person.jpg",
-        }}
-        size={80}
-      />
-      <View style={{marginLeft: 20}}>
-        <Title style={[styles.title, {
-          marginTop:15,
-          marginBottom: 5,
-        }]}>{user.username}</Title>
-        <Caption style={styles.caption}>{user.email}</Caption>
-      </View>
-    </View>
-  </View>
-
-  <View style={styles.userInfoSection}>
-
-
-    <View styles={styles.row}>
-    <Icon name="medal" color="#777777" size={20}/>
-    <Text style={{color:"#777777", marginLeft: 20}}>{user.badges_achieved}</Text>
-    </View>
-
-<View styles={styles.row}>
-    <Icon name="home-account" color="#777777" size={20}/>
-    <Text style={{color:"#777777", marginLeft: 20}}>{user.household_id}</Text>
-    </View>
-
-    <View styles={styles.row}>
-    <Icon name="trophy" color="#777777" size={20}/>
-    <Text style={{color:"#777777", marginLeft: 20}}>{user.points}</Text>
-    </View>
-  </View>
-
-  <View style={styles.infoBoxWrapper}>
-          <View style={[styles.infoBox, {
-            borderRightColor: '#dddddd',
-            borderRightWidth: 1
-          }]}>
-            <Title>#1</Title>
-            <Caption>Household_Northcoders</Caption>
+      <View style={styles.userInfoSection}>
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+          <Avatar.Image
+            source={{
+              uri: user.avatar_url,
+            }}
+            size={80}
+          />
+          <View style={{ marginLeft: 20 }}>
+            <Title
+              style={[
+                styles.title,
+                {
+                  marginTop: 15,
+                  marginBottom: 5,
+                },
+              ]}
+            >
+              Welcome {user.username}
+            </Title>
+            <Caption style={styles.caption}>{user.email}</Caption>
           </View>
-          <View style={styles.infoBox}>
-            <Title>100</Title>
-            <Caption>Points</Caption>
-          </View>
+        </View>
       </View>
 
-<View style={styles.listWrapper}>
-  <TouchableRipple onPress={() => {}}>
-    <View style={styles.listItem}>
-    <Icon name="washing-machine" color="#777777" size={25}/>
-    <Text style={styles.listItemText}>Your Favourite Chores</Text>
-    </View>
-  </TouchableRipple>
+      <View style={styles.userInfoSection}>
+        <View styles={styles.row}>
+          <Icon name="medal" color="#777777" size={20} />
+          <Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.badges_achieved}
+          </Text>
+        </View>
 
-  <Switch value={mode} onValueChange={() => setMode((value) => !value)}/>
-<ListOptions />
- 
+        <View styles={styles.row}>
+          <Icon name="home-account" color="#777777" size={20} />
+          <Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.household_id}
+          </Text>
+        </View>
 
-</View>
-</SafeAreaView>
+        <View styles={styles.row}>
+          <Icon name="trophy" color="#777777" size={20} />
+          <Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.points}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.infoBoxWrapper}>
+        <View
+          style={[
+            styles.infoBox,
+            {
+              borderRightColor: "#dddddd",
+              borderRightWidth: 1,
+            },
+          ]}
+        >
+          <Title>#1</Title>
+          <Caption>{user.household_id}</Caption>
+        </View>
+        <View style={styles.infoBox}>
+          <Title>{user.points}</Title>
+          <Caption>Points</Caption>
+        </View>
+      </View>
+
+      <View style={styles.listWrapper}>
+        <Text>My badges:</Text>
+        {userBadges.map((badge) => {
+          return (
+            <View key={badge.name}>
+              <Avatar.Image
+                source={{
+                  uri: badge.img_url,
+                }}
+                size={80}
+              />
+            </View>
+          );
+        })}
+
+        <ListOptions />
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -118,46 +159,46 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
-    fontWeight: '500',
+    fontWeight: "500",
   },
 
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 10,
   },
 
   infoBoxWrapper: {
-    borderBottomColor: '#dddddd',
+    borderBottomColor: "#dddddd",
     borderBottomWidth: 1,
-    borderTopColor: '#dddddd',
+    borderTopColor: "#dddddd",
     borderTopWidth: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 100,
   },
 
   infoBox: {
-    width: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   listWrapper: {
     marginTop: 10,
   },
   listItem: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 15,
     paddingHorizontal: 30,
   },
   listItemText: {
-    color: '#777777',
+    color: "#777777",
     marginLeft: 20,
-    fontWeight: '600',
+    fontWeight: "600",
     fontSize: 16,
     lineHeight: 26,
   },
@@ -165,24 +206,16 @@ const styles = StyleSheet.create({
     height: 150,
     // width:  - 30,
     elevation: 15,
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: "white",
-     borderRadius: 10,
+    borderRadius: 10,
     // paddingTop: 10,
     paddingHorizontal: 10,
   },
   optionListsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 20,
     paddingHorizontal: 20,
   },
-
-
-
-
-
-
 });
-
-
