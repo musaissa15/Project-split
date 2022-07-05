@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import DatePicker from "../components/DatePicker";
 
 const Groups = () => {
-  return <DatePicker />;
+	return (
+		<View>
+			<Text>Groups</Text>
+		</View>
+	);
 };
 
 export default Groups;
