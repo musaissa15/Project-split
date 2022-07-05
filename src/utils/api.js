@@ -114,6 +114,7 @@ export const getUsersByHousehold = (currentUser) => {
 
       return usersArray;
     });
+};
 
 export const getBadges = (badgeId) => {
   const badgeRef = doc(db, "badges", badgeId);
