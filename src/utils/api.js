@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -9,6 +9,7 @@ import {
   query,
   where,
   deleteDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 
@@ -20,6 +21,17 @@ export const getUserDataById = (uid) => {
       return userData.data();
     }
     return Promise.reject(new Error("user not found"));
+  });
+};
+
+export const getHouseholdbyUser = (householdId) => {
+  const userRef = doc(db, "households", householdId);
+
+  return getDoc(userRef).then((householdData) => {
+    if (householdData.data()) {
+      return householdData.data();
+    }
+    return Promise.reject(new Error("data not found"));
   });
 };
 
@@ -75,6 +87,29 @@ export const getChoresByHouseholdId = (currentUser) => {
     });
 };
 
+export const postChore = (userId, {
+  choreName, choreDescription, difficulty, day, month, usersAssigned,
+}) => {
+  return getUserDataById(userId).then(({household_id}) => {
+    const currentYear = new Date().getFullYear();
+    const dueDate = new Date(currentYear, parseInt(month) - 1, parseInt(day));
+    const dueDateTimeStamp = Timestamp.fromDate(dueDate);
+    addDoc(collection(db, "chores"), {
+      chore_name: choreName,
+      description: choreDescription,
+      difficulty,
+      due_date: dueDateTimeStamp,
+      is_completed: false,
+      created_by: userId,
+      household_id,
+      image_url: "",
+      votes: 0,
+      users_assigned: usersAssigned,
+    });
+  });
+};
+
+
 export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
   const choreRef = doc(db, "chores", completedChoreId);
 
@@ -83,10 +118,44 @@ export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
   });
 };
 
+export const getUsersByHousehold = (currentUser) => {
+  const userId = currentUser ? currentUser.uid : null;
+
+  return getUserDataById(userId)
+    .then((userData) => {
+      const householdId = userData.household_id;
+      const q = query(
+        collection(db, "users"),
+        where("household_id", "==", householdId),
+      );
+      return getDocs(q);
+    })
+    .then((users) => {
+      const usersArray = [];
+
+      users.forEach((user) => {
+        usersArray.push(user.data());
+      });
+
+      return usersArray;
+    });
+};
+
+export const getBadges = (badgeId) => {
+  const badgeRef = doc(db, "badges", badgeId);
+
+  return getDoc(badgeRef).then((badges) => {
+    if (badges.data()) {
+      return badges.data();
+    }
+    return Promise.reject(new Error("user not found"));
+  });
+};
+
 export const deleteChore = (choreId) => {
   const choreRef = doc(db, "chores", choreId);
   return deleteDoc(choreRef);
-};
+}
 
 // just here to show how to use function in profile
 
