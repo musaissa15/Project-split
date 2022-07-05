@@ -8,6 +8,7 @@ import {
   getDocs,
   query,
   where,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 
@@ -80,6 +81,11 @@ export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
   return updateDoc(choreRef, {
     is_completed: !isCompleted,
   });
+};
+
+export const deleteChore = (choreId) => {
+  const choreRef = doc(db, "chores", choreId);
+  return deleteDoc(choreRef);
 };
 
 // just here to show how to use function in profile

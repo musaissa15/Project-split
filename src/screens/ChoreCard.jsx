@@ -1,14 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import {
-  Button,
-  Card,
-  Checkbox,
-  List,
-} from "react-native-paper";
+import { Button, Card, Checkbox, List } from "react-native-paper";
 import { patchChoreIsCompleted } from "../utils/api";
 import ChoreModal from "../components/Modal";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Feather from "react-native-vector-icons/Feather";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ChoreCard = ({ chore }) => {
   const [checked, setChecked] = React.useState(chore.is_completed);
@@ -40,12 +37,10 @@ const ChoreCard = ({ chore }) => {
             )}
             right={(props) => (
               <Button
-                style={styles.button}
-                mode="outlined"
+                // size={80}
+                // icon="information"
                 onPress={() => setModalVisible(true)}
-              >
-                Info
-              </Button>
+              ><Feather style={styles.info} name="info"/></Button>
             )}
             style={styles.list}
           />
@@ -74,9 +69,7 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
-  cardContent: {
-  
-  },
+  cardContent: {},
   list: {
     padding: 0,
     margin: 0,
@@ -84,8 +77,8 @@ const styles = StyleSheet.create({
   checkbox: {
     height: 16,
   },
-  button: {
+  info: {
     padding: 0,
     margin: 0,
-  }
+  },
 });

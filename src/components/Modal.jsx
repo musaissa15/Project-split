@@ -1,8 +1,18 @@
 import React from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { deleteChore } from "../utils/api";
 
 const ChoreModal = ({ modalVisible, setModalVisible, chore }) => {
   const dueDate = chore.due_date.toDate().toDateString();
+
+  const handleDelete = () => {
+    //modal - are you sure you want to delete?
+    //if yes - deletechore
+      //
+    //if no - return
+
+    deleteChore(chore.chore_id)
+  }
 
   return (
     <View style={styles.centeredView}>
@@ -33,7 +43,7 @@ const ChoreModal = ({ modalVisible, setModalVisible, chore }) => {
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                // onPress={deleteChore}
+                onPress={handleDelete}
               >
                 <Text style={styles.textStyle}>Delete</Text>
               </Pressable>
