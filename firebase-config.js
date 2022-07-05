@@ -3,13 +3,12 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDz91CImqXNM1vT7ufqbaE7GpHXmw9hOiI",
-  authDomain: "split-chores.firebaseapp.com",
-  projectId: "split-chores",
-  storageBucket: "split-chores.appspot.com",
-  messagingSenderId: "230807290415",
-  appId: "1:230807290415:web:a006d091511ba74a3d7cda",
-  measurementId: "G-DS8JZKBVJE",
+  apiKey: "AIzaSyDe35LLnKCEfPg2ca_UTI_IqsXn8_66Hpo",
+  authDomain: "project-split-5612f.firebaseapp.com",
+  projectId: "project-split-5612f",
+  storageBucket: "project-split-5612f.appspot.com",
+  messagingSenderId: "831235356195",
+  appId: "1:831235356195:web:fcbf3e6544a8dca7f62396"
 };
 
 export const app = initializeApp(firebaseConfig);
