@@ -2,14 +2,20 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Avatar, Title, Caption, TouchableRipple } from "react-native-paper";
 import  Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { auth } from "../../firebase-config";
 
 const SettingsScreen = ({ navigation }) => {
+    const signOutUser = () => {
+        auth.signOut().then(() => {
+          navigation.replace("Login");
+        })
+      }
  
 
   return (
     <View>
   
-      <TouchableRipple onPress={() => {}}>
+      <TouchableRipple onPress={signOutUser}>
       <View style={styles.listItem}>
     <Icon name="logout" color="#777777" size={25}/>
     <Text style={styles.listItemText}>Sign out</Text>
