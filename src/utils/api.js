@@ -68,7 +68,6 @@ export const getChoresByHouseholdId = (currentUser) => {
       const choresArray = [];
 
       chores.forEach((chore) => {
-        // choresArray.push({[chore.id]: [chore.data()]});
         choresArray.push({ chore_id: chore.id, ...chore.data() });
       });
       return choresArray;
