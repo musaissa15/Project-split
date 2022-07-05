@@ -3,16 +3,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { getUsersByHousehold } from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-// const [userData, setUserData] = useState({})
-// const [isLoading, setIsLoading] = useState(true)
-
-// useEffect(() => {
-//   getUserDataById(db, "2aTBhAwOinU5YxpWAa0nlb48tIz2").then((result) => {
-//     setUserData(result)
-//     setIsLoading(false)
-//   })
-// }, []);
-
 const Groups = () => {
   const currentUser = useContext(CurrentUserContext);
   const [usersData, setUsersData] = useState([]);
