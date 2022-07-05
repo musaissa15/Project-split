@@ -68,11 +68,18 @@ export const getChoresByHouseholdId = (currentUser) => {
       const choresArray = [];
 
       chores.forEach((chore) => {
-        choresArray.push(chore.data());
+        choresArray.push({ chore_id: chore.id, ...chore.data() });
       });
-
       return choresArray;
     });
+};
+
+export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
+  const choreRef = doc(db, "chores", completedChoreId);
+
+  return updateDoc(choreRef, {
+    is_completed: !isCompleted,
+  });
 };
 
 // just here to show how to use function in profile
