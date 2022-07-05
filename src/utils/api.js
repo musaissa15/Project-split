@@ -60,7 +60,7 @@ export const getChoresByHouseholdId = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "chores"),
-        where("household_id", "==", householdId),
+        where("household_id", "==", householdId)
       );
       return getDocs(q);
     })
@@ -68,34 +68,18 @@ export const getChoresByHouseholdId = (currentUser) => {
       const choresArray = [];
 
       chores.forEach((chore) => {
-        choresArray.push(chore.data());
+        choresArray.push({ chore_id: chore.id, ...chore.data() });
       });
-
       return choresArray;
     });
 };
 
-export const getUsersByHousehold = (currentUser) => {
-  const userId = currentUser ? currentUser.uid : null;
+export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
+  const choreRef = doc(db, "chores", completedChoreId);
 
-  return getUserDataById(userId)
-    .then((userData) => {
-      const householdId = userData.household_id;
-      const q = query(
-        collection(db, "users"),
-        where("household_id", "==", householdId),
-      );
-      return getDocs(q);
-    })
-    .then((users) => {
-      const usersArray = [];
-
-      users.forEach((user) => {
-        usersArray.push(user.data());
-      });
-
-      return usersArray;
-    });
+  return updateDoc(choreRef, {
+    is_completed: !isCompleted,
+  });
 };
 
 // just here to show how to use function in profile
