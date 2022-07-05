@@ -60,7 +60,7 @@ export const getChoresByHouseholdId = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "chores"),
-        where("household_id", "==", householdId),
+        where("household_id", "==", householdId)
       );
       return getDocs(q);
     })
@@ -72,6 +72,29 @@ export const getChoresByHouseholdId = (currentUser) => {
       });
 
       return choresArray;
+    });
+};
+
+export const getUsersByHousehold = (currentUser) => {
+  const userId = currentUser ? currentUser.uid : null;
+
+  return getUserDataById(userId)
+    .then((userData) => {
+      const householdId = userData.household_id;
+      const q = query(
+        collection(db, "users"),
+        where("household_id", "==", householdId)
+      );
+      return getDocs(q);
+    })
+    .then((users) => {
+      const usersArray = [];
+
+      users.forEach((user) => {
+        usersArray.push(user.data());
+      });
+
+      return usersArray;
     });
 };
 
