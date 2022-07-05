@@ -22,6 +22,17 @@ export const getUserDataById = (uid) => {
   });
 };
 
+export const getHouseholdbyUser = (householdId) => {
+  const userRef = doc(db, "households", householdId);
+
+  return getDoc(userRef).then((householdData) => {
+    if (householdData.data()) {
+      return householdData.data();
+    }
+    return Promise.reject(new Error("data not found"));
+  });
+};
+
 export const postHousehold = (userId, householdName) => {
   const userRef = doc(db, "users", userId);
   const newHouseholdRef = addDoc(collection(db, "households"), {
@@ -96,6 +107,17 @@ export const getUsersByHousehold = (currentUser) => {
 
       return usersArray;
     });
+};
+
+export const getBadges = (badgeId) => {
+  const badgeRef = doc(db, "badges", badgeId);
+
+  return getDoc(badgeRef).then((badges) => {
+    if (badges.data()) {
+      return badges.data();
+    }
+    return Promise.reject(new Error("user not found"));
+  });
 };
 
 // just here to show how to use function in profile

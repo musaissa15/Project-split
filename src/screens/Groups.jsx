@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useEffect, useState, useContext } from "react";
-import { getUsersByHousehold } from "../utils/api";
+import { getBadges, getUsersByHousehold } from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import { Avatar } from "react-native-paper";
 
 const Groups = () => {
   const currentUser = useContext(CurrentUserContext);
@@ -19,16 +20,22 @@ const Groups = () => {
       <Text>Here are the people in your house:</Text>
       {usersData.map((user) => {
         return (
-          <View>
+          <View key={user.username}>
             <View style={styles.userInfoSection}></View>
             <Text>Username: {user.username}</Text>
-            <Text>Avatar: {user.avatar_url}</Text>
+            <Avatar.Image
+              source={{
+                uri: user.avatar_url,
+              }}
+              size={80}
+            />
             <Text>Badges: {user.badges_achieved}</Text>
             <Text>Points: {user.points}</Text>
             <View style={styles.userInfoSection}></View>
           </View>
         );
       })}
+      <Text>Here are the chores in your household:</Text>
     </View>
   );
 };
