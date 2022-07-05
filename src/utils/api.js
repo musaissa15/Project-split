@@ -98,6 +98,29 @@ export const postChore = (userId, {
   });
 };
 
+export const getUsersByHousehold = (currentUser) => {
+	const userId = currentUser ? currentUser.uid : null;
+
+	return getUserDataById(userId)
+		.then((userData) => {
+			const householdId = userData.household_id;
+			const q = query(
+				collection(db, "users"),
+				where("household_id", "==", householdId)
+			);
+			return getDocs(q);
+		})
+		.then((users) => {
+			const usersArray = [];
+
+			users.forEach((user) => {
+				usersArray.push(user.data());
+			});
+
+			return usersArray;
+		});
+};
+
 // just here to show how to use function in profile
 
 // const [userData, setUserData] = useState({})
