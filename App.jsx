@@ -71,3 +71,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+
+//changed msg to MSG
