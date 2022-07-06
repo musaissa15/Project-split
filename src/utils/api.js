@@ -8,6 +8,7 @@ import {
   getDocs,
   query,
   where,
+  deleteDoc,
   Timestamp,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
@@ -150,6 +151,11 @@ export const getBadges = (badgeId) => {
     return Promise.reject(new Error("user not found"));
   });
 };
+
+export const deleteChore = (choreId) => {
+  const choreRef = doc(db, "chores", choreId);
+  return deleteDoc(choreRef);
+}
 
 // just here to show how to use function in profile
 
