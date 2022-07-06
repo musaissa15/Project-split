@@ -60,7 +60,7 @@ const Profile = ({ navigation }) => {
   }, [user]);
   console.log(userBadges);
 
-
+//this is the signout function that definately works in the settingsScreen and this should now work on the profile page. Worked for me!!
   const signOutUser = () => {
     auth.signOut().then(() => {
       navigation.replace("Login");
