@@ -4,12 +4,13 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import { getChoresByHouseholdId } from "../utils/api";
 import ChoreCard from "./ChoreCard";
 import { ScrollView } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Chores = () => {
   const currentUser = React.useContext(CurrentUserContext);
   const [householdChores, setHouseholdChores] = useState([]);
 
-  useEffect(() => {
+  useFocusEffect(() => {
     getChoresByHouseholdId(currentUser).then((chores) => {
       setHouseholdChores(chores);
     });
