@@ -7,7 +7,7 @@ import Groups from "./Groups";
 import Chores from "./Chores";
 import AddChore from "./AddChore";
 import SettingsScreen from "./SettingsScreen";
-import msg from "./msg";
+import Msg from "./Msg";
 
 const Tab = createBottomTabNavigator();
 
@@ -67,7 +67,7 @@ const MyTabs = () => {
 
       <Tab.Screen
         name="Message"
-        component={msg}
+        component={Msg}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color, size }) => (

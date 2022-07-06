@@ -120,7 +120,7 @@ const Messages = [
 
 
 
-const msg = ({navigation}) => {
+const Msg = ({navigation}) => {
   return (
    <Container>
     <FlatList
@@ -149,7 +149,7 @@ const msg = ({navigation}) => {
   )
 }
 
-export default msg
+export default Msg
 
 
 const styles = StyleSheet.create({
