@@ -41,12 +41,12 @@ const ChoreModal = ({
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.centeredView}>
+        <View style={styles.centered}>
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>{chore.chore_name}</Text>
             <Text style={styles.modalText}>{chore.description}</Text>
-            <Text style={styles.modalText}>{dueDate}</Text>
-            <Text style={styles.modalText}>{chore.difficulty} points</Text>
+            <Text style={styles.modalText}>Assigned to {chore.user_assigned} points</Text>
+            <Text style={styles.modalText}>Due on {dueDate}</Text>
 
             <View style={styles.buttonContainer}>
               <View style={styles.threeButtons}>
@@ -72,12 +72,12 @@ const ChoreModal = ({
 
               {confirmDelete ? (
                 <View style={styles.confirmButton}>
-                  <Text>Are you sure?</Text>
+                  <Text style={{padding: 16}}>Are you sure?</Text>
                   <Pressable
                     style={[
                       styles.button,
                       styles.buttonClose,
-                      styles.yesButton,
+                      {width: 64, margin: "auto"},
                     ]}
                     onPress={() => handleDelete()}
                     disabled={isDeleting}
@@ -97,8 +97,8 @@ const ChoreModal = ({
 export default ChoreModal;
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
+  centered: {
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
@@ -123,13 +123,13 @@ const styles = StyleSheet.create({
   },
   threeButtons: {
     flexDirection: "row",
+    flexWrap: "nowrap",
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    marginHorizontal: 5,
+    marginHorizontal: 10,
     elevation: 2,
-    width: 64,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -138,16 +138,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#2F5D62",
   },
   confirmButton: {
+    flex: 3,
     flexDirection: "column",
     textAlign: "center",
+    justifyContent: "center",
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
   },
+  modalTitle: {
+    fontWeight: "bold",
+    fontSize: 24,
+  },
   modalText: {
-    marginBottom: 15,
+    margin: 8,
     textAlign: "center",
   },
 });
