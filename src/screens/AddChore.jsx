@@ -16,7 +16,6 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import { Avatar } from "react-native-paper";
 
 const Addchore = () => {
-  
   const [choreName, setChoreName] = useState("");
   const [choreDescription, setChoreDescription] = useState("");
   const [openDifficulty, setOpenDifficulty] = useState(false);
@@ -33,9 +32,9 @@ const Addchore = () => {
     { label: "4", value: 4 },
     { label: "5", value: 5 },
   ]);
-  
+
   const [assignUserOptions, setAssignUserOptions] = useState([]);
-  
+
   const [clickedUser, setClickedUser] = useState("");
 
   const currentUser = useContext(CurrentUserContext);
@@ -76,164 +75,211 @@ const Addchore = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <ScrollView>
       <StatusBar style="light" />
-      <View style={styles.inputContainer}>
-        <Text style={styles.titleContainer}>What needs doing?!</Text>
-        <View style={styles.allInput}>
-          <TextInput
-            style={styles.input}
-            placeholder="Chore Name "
-            value={choreName}
-            onChangeText={setChoreName}
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Chore Description"
-            value={choreDescription}
-            onChangeText={setChoreDescription}
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Day"
-            value={day}
-            onChangeText={setDay}
-            maxLength={2}
-            keyboardType={"number-pad"}
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Month"
-            value={month}
-            onChangeText={setMonth}
-            maxLength={2}
-            keyboardType={"number-pad"}
-          />
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.banner}>
+          <Text style={styles.heading}>Add a chore</Text>
         </View>
+        <View style={styles.wholePage}>
+          <View style={styles.inputs}>
+            <TextInput
+              style={styles.input}
+              placeholder="Chore name?"
+              value={choreName}
+              onChangeText={setChoreName}
+            />
 
-        <View style={styles.difficultyDropdown}>
-          <Text style={styles.difficultyFont}>Difficulty:</Text>
-          <DropDownPicker
-            placeholder="Select difficulty"
-            open={openDifficulty}
-            value={difficultyValue}
-            items={difficulty}
-            setOpen={setOpenDifficulty}
-            setValue={setDifficultyValue}
-            setItems={setDifficulty}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Description"
+              value={choreDescription}
+              onChangeText={setChoreDescription}
+            />
 
-         
-          <ScrollView horizontal style={styles.userContainer}>
-            {assignUserOptions.map((user) => {
-              return (
-                <Pressable
-                  key={user.username}
-                  style={{
-                    backgroundColor: clickedUser === user.username ? "red" : "",
-                  }}
-                  onPress={() => {
-                    checkClicked(user.username);
-                  }}
-                >
-                  <View style={styles.userText}>
-                    <Text style={styles.userText}> {user.username}</Text>
-                    <Avatar.Image
-                      style={styles.avatarBackground}
-                      source={{
-                        uri: user.avatar_url,
-                      }}
-                      size={80}
-                    />
-                  </View>
-                </Pressable>
-              );
-            })}
-          </ScrollView>
+            <TextInput
+              style={styles.input}
+              placeholder="Day"
+              value={day}
+              onChangeText={setDay}
+              maxLength={2}
+              keyboardType={"number-pad"}
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Month"
+              value={month}
+              onChangeText={setMonth}
+              maxLength={2}
+              keyboardType={"number-pad"}
+            />
+          </View>
+
+          <View style={styles.difficultyDropdown}>
+            <Text style={styles.font}>Difficulty:</Text>
+            <DropDownPicker
+              placeholder="Select difficulty"
+              open={openDifficulty}
+              value={difficultyValue}
+              items={difficulty}
+              setOpen={setOpenDifficulty}
+              setValue={setDifficultyValue}
+              setItems={setDifficulty}
+              style={styles.dropdown}
+            />
+          </View>
+          <View style={styles.assignUser}>
+            <Text style={styles.font}>Assign a housemate:</Text>
+            <ScrollView horizontal style={styles.userContainer}>
+              {assignUserOptions.map((user) => {
+                return (
+                  <Pressable
+                    key={user.username}
+                    style={{
+                      backgroundColor:
+                        clickedUser === user.username ? "#5E8B7E" : "",
+                      borderRadius: 5,
+                      padding: 16,
+                    }}
+                    onPress={() => {
+                      checkClicked(user.username);
+                    }}
+                  >
+                    <View style={styles.userText}>
+                      <Text
+                        style={{
+                          color: clickedUser === user.username ? "white" : "black",
+                          paddingBottom: 4,
+                          fontSize: 18,
+                          alignItems: "center",
+
+                        }}
+                      >
+                        {" "}
+                        {user.username}
+                      </Text>
+                      <Avatar.Image
+                        style={styles.avatarBackground}
+                        source={{
+                          uri: user.avatar_url,
+                        }}
+                        size={80}
+                      />
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          </View>
+          <Pressable style={styles.button} onPress={addChore}>
+            <Text style={styles.addText}>Add</Text>
+          </Pressable>
         </View>
-        <Pressable style={styles.button} onPress={addChore}>
-          <Text style={styles.text}>Add</Text>
-        </Pressable>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
-
-
 
 export default Addchore;
 
 const styles = StyleSheet.create({
-  container: {
+  banner: {
+    padding: 10,
+    width: "100%",
+    backgroundColor: "#2F5D62",
+    height: 125,
+    alignItems: "center",
+  },
+  heading: {
+    fontSize: 25,
+    fontWeight: "bold",
+    padding: 10,
+    marginTop: 10,
+    color: "white",
+    alignItems: "center",
+  },
+  wholePage: {
     flex: 1,
+    margin: 18,
+    marginTop: -40,
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  inputs: {
+    width: "90%",
+    marginTop: 16,
     backgroundColor: "white",
   },
   input: {
-    width: 300,
     backgroundColor: "#ecf0f1",
-    padding: 20,
+    padding: 16,
+    margin: 8,
     alignItems: "center",
     fontSize: 20,
     borderWidth: "thin",
     borderStyle: "double",
+    borderRadius: 6,
   },
-  inputContainer: {
-    width: 300,
+  difficultyDropdown: {
+    fontSize: 16,
+    // cursor: "pointer",
+    // alignSelf: "center",
+    // alignItems: "flex-start",
+    // alignSelf: "baseline",
+    width: "85%",
+    marginVertical: 16,
+    // padding: 16,
+    // borderWidth: 3,
+    // borderColor: "black",
+    // backgroundColor: "white",
   },
-  titleContainer: {
-    fontStyle: "italic",
-    fontSize: 40,
-    marginBottom: 50,
+  dropdown: {
+    cursor: "pointer",
+    // alignSelf: "center",
+    // alignItems: "flex-start",
+    borderColor: "black",
+    backgroundColor: "white",
+    fontSize: 20,
+  },
+  assignUser: {
+    width: "85%",
   },
   registerMessage: {
     marginTop: 20,
     marginBottom: -10,
   },
   button: {
-    marginTop: 20,
+    margin: 24,
+    padding: 16,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "black",
+    backgroundColor: "#2F5D62",
   },
-  text: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
+  userText: {
+    alignItems: "center",
+  },
+  font: {
+    fontSize: 20,
+  },
+  addText: {
+    fontSize: 24,
     color: "white",
+    fontWeight: "bold",
   },
-  difficultyDropdown: {
-    fontSize: 16,
-    // left: 80,
-    border: "none",
-    cursor: "pointer",
-    alignSelf: "center",
-    alignItems: "flex-start",
-    alignSelf: "baseline",
-    margin: "20px",
-  },
-  difficultyFont: {
-    fontSize: "large",
-  },
-  userClicked: {
-    backgroundColor: "white",
-  },
-  userText: {},
   avatarBackground: {
     backgroundColor: "#5E8B7E",
-    paddingTop: 10,
-  },
-  userContainer: {
-    marginRight: 100,
   },
 });
