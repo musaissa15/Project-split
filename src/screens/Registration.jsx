@@ -20,6 +20,12 @@ import { useTheme } from 'react-native-paper';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { postAuthUser } from "../utils/api";
+import { useFonts, Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium, } from "@expo-google-fonts/poppins";
+
+
+
 
 
 const Registration = ({navigation}) => {
@@ -52,7 +58,7 @@ useLayoutEffect(() => {
   
   return (
     <KeyboardAvoidingView>
-      <LinearGradient colors={["#22577E", "#01ab9d"]}
+      <LinearGradient colors={["#2F5D62", "#01ab9d"]}
       style={styles.container}>
         <View style={styles.header}>
         <Text style={styles.text_header}>Create an account</Text>
@@ -68,7 +74,7 @@ useLayoutEffect(() => {
       />
        <TextInput
           style={styles.textInput}
-          placeholder="Email"
+          placeholder="Please enter your Email"
           autoFocus
           autoCapitalize="none"
           value={registerEmail}
@@ -85,7 +91,7 @@ useLayoutEffect(() => {
       />
      <TextInput
           style={styles.textInput}
-          placeholder="Password"
+          placeholder="Please enter your Password"
           secureTextEntry={true}
           autoCapitalize="none"
           value={registerPassword}
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
     paddingBottom: 50,
+    fontFamily: "Poppins_400Regular",
     
 },
 footer: {
@@ -139,14 +146,30 @@ footer: {
     paddingVertical: 30
 },
 text_header: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 50,
-    fontFamily: "Poppins",
+  flexDirection: "row",
+  justifyContent: "center",
+  color: "#DFEEEA",
+  fontWeight: 'bold',
+  fontSize: 50,
+  fontFamily: "Poppins_400Regular",
+  flex: 1,
+  textShadowOffset: {
+    height: 2,
+    width: 2,
+  },
+  textShadowColor: "#22577E",
+  textShadowRadius: 7,
+  textAlign: "center",
+ 
 },
+
+
+
 text_footer: {
     color: '#05375a',
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: "Poppins_400Regular",
 },
 action: {
     flexDirection: 'row',
@@ -167,10 +190,12 @@ textInput: {
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
     color: '#05375a',
+    fontFamily: "Poppins_400Regular",
 },
 errorMsg: {
     color: '#FF0000',
     fontSize: 14,
+    fontFamily: "Poppins_400Regular",
 },
 button: {
   alignItems: 'center',
@@ -181,20 +206,21 @@ signIn: {
   height: 50,
   justifyContent: 'center',
   alignItems: 'center',
-  borderRadius: 10
+  borderRadius: 10,
+  fontFamily: "Poppins_400Regular",
 },
 textSign: {
   fontSize: 18,
   fontWeight: 'bold',
   alignItems: "center",
   justifyContent: 'center',
+  fontFamily: "Poppins_400Regular",
 },
 registerMessage: {
 marginTop: 20,
 marginBottom: -10,
 fontWeight: 'bold',
+fontFamily: "Poppins_400Regular",
 },
-
-
 
 })

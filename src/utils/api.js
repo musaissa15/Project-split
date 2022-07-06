@@ -160,6 +160,19 @@ export const deleteChore = (choreId) => {
   return deleteDoc(choreRef);
 };
 
+export const patchUserPoints = (userId,chorePoints) => {
+  getUserDataById(userId).then((data) => {
+    let updatePoints = data.points;
+    const pointsMultiplyer = 4;
+    updatePoints += chorePoints * pointsMultiplyer;
+    
+    return updateDoc(doc(db, "users", userId), {
+      points: updatePoints
+    })
+  })
+  // console.log(userId);
+}
+
 // just here to show how to use function in profile
 
 // const [userData, setUserData] = useState({})
