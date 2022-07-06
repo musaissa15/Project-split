@@ -24,15 +24,18 @@ export const getUserDataById = (uid) => {
   });
 };
 
-export const getHouseholdbyUser = (householdId) => {
-  const userRef = doc(db, "households", householdId);
-
-  return getDoc(userRef).then((householdData) => {
-    if (householdData.data()) {
-      return householdData.data();
-    }
-    return Promise.reject(new Error("data not found"));
-  });
+export const getHouseholdbyUser = (uid) => {
+  return getUserDataById(uid)
+    .then((userData) => {
+      const householdID = userData.household_id;
+      return getDoc(doc(db, "households", householdID));
+    })
+    .then((householdData) => {
+      if (householdData.data()) {
+        return householdData.data();
+      }
+      return Promise.reject(new Error("data not found"));
+    });
 };
 
 export const postHousehold = (userId, householdName) => {
@@ -73,7 +76,7 @@ export const getChoresByHouseholdId = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "chores"),
-        where("household_id", "==", householdId),
+        where("household_id", "==", householdId)
       );
       return getDocs(q);
     })
@@ -87,10 +90,11 @@ export const getChoresByHouseholdId = (currentUser) => {
     });
 };
 
-export const postChore = (userId, {
-  choreName, choreDescription, difficulty, day, month, usersAssigned,
-}) => {
-  return getUserDataById(userId).then(({household_id}) => {
+export const postChore = (
+  userId,
+  { choreName, choreDescription, difficulty, day, month, usersAssigned }
+) => {
+  return getUserDataById(userId).then(({ household_id }) => {
     const currentYear = new Date().getFullYear();
     const dueDate = new Date(currentYear, parseInt(month) - 1, parseInt(day));
     const dueDateTimeStamp = Timestamp.fromDate(dueDate);
@@ -104,11 +108,10 @@ export const postChore = (userId, {
       household_id,
       image_url: "",
       votes: 0,
-      users_assigned: usersAssigned,
+      // users_assigned: usersAssigned,
     });
   });
 };
-
 
 export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
   const choreRef = doc(db, "chores", completedChoreId);
@@ -126,7 +129,7 @@ export const getUsersByHousehold = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "users"),
-        where("household_id", "==", householdId),
+        where("household_id", "==", householdId)
       );
       return getDocs(q);
     })
@@ -148,13 +151,26 @@ export const getBadges = (badgeId) => {
     if (badges.data()) {
       return badges.data();
     }
-    return Promise.reject(new Error("user not found"));
+    return Promise.reject(new Error("badge not found"));
   });
 };
 
 export const deleteChore = (choreId) => {
   const choreRef = doc(db, "chores", choreId);
   return deleteDoc(choreRef);
+};
+
+export const patchUserPoints = (userId,chorePoints) => {
+  getUserDataById(userId).then((data) => {
+    let updatePoints = data.points;
+    const pointsMultiplyer = 4;
+    updatePoints += chorePoints * pointsMultiplyer;
+    
+    return updateDoc(doc(db, "users", userId), {
+      points: updatePoints
+    })
+  })
+  // console.log(userId);
 }
 
 export const patchUserPoints = (userId,chorePoints) => {

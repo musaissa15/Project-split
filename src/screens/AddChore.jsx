@@ -17,6 +17,8 @@ const Addchore = () => {
   const [choreName, setChoreName] = useState("");
   const [choreDescription, setChoreDescription] = useState("");
   const [openDifficulty, setOpenDifficulty] = useState(false);
+  const user = useContext(CurrentUserContext);
+  const userID = user.uid;
 
   const [difficultyValue, setDifficultyValue] = useState(false);
   const [day, setDay] = useState("");
@@ -45,7 +47,7 @@ const Addchore = () => {
   }, []);
 
   const addChore = () => {
-    postChore("6b4fR5AjYiTTWXmpxiHGOISOUuv2", {
+    postChore(userID, {
       choreName,
       choreDescription,
       difficulty: difficultyValue,
@@ -60,8 +62,8 @@ const Addchore = () => {
         setDay("");
         alert("Your chore has been added");
       })
-      .catch(() => {
-        alert("Sorry something went wrong.Please try again ");
+      .catch((err) => {
+        alert(err);
       });
   };
 
@@ -106,8 +108,8 @@ const Addchore = () => {
 
         <View style={styles.difficultyDropdown}>
           <Text style={styles.difficultyFont}>Difficulty:</Text>
-				  <DropDownPicker
-					  placeholder="Select difficulty"
+          <DropDownPicker
+            placeholder="Select difficulty"
             open={openDifficulty}
             value={difficultyValue}
             items={difficulty}
@@ -116,8 +118,8 @@ const Addchore = () => {
             setItems={setDifficulty}
           />
 
-				  <DropDownPicker
-					  placeholder="Select user to assign"
+          <DropDownPicker
+            placeholder="Select user to assign"
             open={assignUserOpen}
             value={assignUser}
             items={assignUserOptions}
