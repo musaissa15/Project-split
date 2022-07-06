@@ -71,7 +71,7 @@ const Profile = ({ navigation }) => {
           ></Image>
         </View>
         <View style={styles.infoCard}>
-          <Text styles={styles.subtitle}>House</Text>
+          <Text styles={styles.subtitle}>{household.household_name}</Text>
         </View>
         <View style={styles.infoCard}>
           <Text styles={styles.subtitle}>Overall points: {user.points}</Text>
