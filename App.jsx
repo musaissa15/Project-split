@@ -41,26 +41,30 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Stack.Navigator
-          screenOptions={globalScreenOptions}
-          initialRouteName="Welcome"
-        >
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Register" component={Registration} />
-          <Stack.Screen name="App" component={MyTabs} />
-          <Stack.Screen name="Setup" component={SetupProfile} />
-          <Stack.Screen name="Setup Household" component={SetupHousehold} />
-          <Stack.Screen name="Chat" component={Chat} options={({route}) => ({
-            title: route.params.userName})} /> 
-            <Stack.Screen name="Msg" component={Msg} />
-
-        </Stack.Navigator>
-      </CurrentUserContext.Provider>
-    </NavigationContainer>
-  );
+		<NavigationContainer>
+			<CurrentUserContext.Provider value={currentUser}>
+				<Stack.Navigator
+					screenOptions={globalScreenOptions}
+					initialRouteName="Setup Household"
+				>
+					<Stack.Screen name="Login" component={Login} />
+					<Stack.Screen name="Welcome" component={WelcomeScreen} />
+					<Stack.Screen name="Register" component={Registration} />
+					<Stack.Screen name="App" component={MyTabs} />
+					<Stack.Screen name="Setup" component={SetupProfile} />
+					<Stack.Screen name="Setup Household" component={SetupHousehold} />
+					<Stack.Screen
+						name="Chat"
+						component={Chat}
+						options={({ route }) => ({
+							title: route.params.userName,
+						})}
+					/>
+					<Stack.Screen name="Msg" component={Msg} />
+				</Stack.Navigator>
+			</CurrentUserContext.Provider>
+		</NavigationContainer>
+	);
 }
 
 const styles = StyleSheet.create({
