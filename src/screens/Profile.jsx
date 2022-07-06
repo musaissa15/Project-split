@@ -22,6 +22,10 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase-config";
 const { width } = Dimensions.get("screen");
 import { LinearGradient } from "expo-linear-gradient";
+import { auth } from "../../firebase-config";
+
+
+
 
 const Profile = ({ navigation }) => {
   const [mode, setMode] = useState(false);
@@ -56,6 +60,14 @@ const Profile = ({ navigation }) => {
   }, [user]);
   console.log(userBadges);
 
+//this is the signout function that definately works in the settingsScreen and this should now work on the profile page. Worked for me!!
+  const signOutUser = () => {
+    auth.signOut().then(() => {
+      navigation.replace("Login");
+    })
+  }
+
+
   return (
     <ScrollView>
       <SafeAreaView>
@@ -70,9 +82,22 @@ const Profile = ({ navigation }) => {
             style={styles.circle_radius}
           ></Image>
         </View>
+
+        <View>
+        <TouchableRipple onPress={signOutUser}>
+      <View style={styles.listItem}>
+    <Icon name="logout" color="#777777" size={25}/>
+    <Text style={styles.listItemText}>Sign out</Text>
+    </View>
+      </TouchableRipple>
+        </View>
+
         <View style={styles.infoCard}>
           <Text styles={styles.subtitle}>{household.household_name}</Text>
         </View>
+
+       
+
         <View style={styles.infoCard}>
           <Text styles={styles.subtitle}>Overall points: {user.points}</Text>
         </View>
@@ -148,4 +173,20 @@ const styles = StyleSheet.create({
     elevation: 15,
     marginTop: 20,
   },
+  listItem: {
+    flexDirection: 'row',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    textAlign: "left"
+
+  },
+  listItemText: {
+    color: '#777777',
+    marginLeft: 20,
+    fontWeight: '600',
+    fontSize: 16,
+    lineHeight: 26,
+    textAlign: "left",
+  },
+
 });

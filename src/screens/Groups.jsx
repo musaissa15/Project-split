@@ -1,19 +1,28 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState, useContext } from "react";
 import {
   getBadges,
   getChoresByHouseholdId,
   getUsersByHousehold,
+  patchChoreVotes,
 } from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import { Avatar } from "react-native-paper";
-import { Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Groups = () => {
   const currentUser = useContext(CurrentUserContext);
   const [usersData, setUsersData] = useState([]);
   const [choresData, setChoresData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [choreVotes, setChoreVotes] = useState(0);
 
   useEffect(() => {
     getUsersByHousehold(currentUser).then((users) => {
@@ -23,8 +32,6 @@ const Groups = () => {
       setChoresData(chores);
     });
   }, []);
-
-  console.log(choresData);
 
   return (
     <ScrollView>
@@ -47,7 +54,16 @@ const Groups = () => {
                     size={80}
                     style={styles.avatarBackground}
                   />
-                  <Text style={styles.points}>{user.points}</Text>
+
+                  <Text style={styles.points}>
+                    <FontAwesome5
+                      style={styles.icon}
+                      name="medal"
+                      size={12}
+                      color="#5E8B7E"
+                    />
+                    {user.points}
+                  </Text>
                 </View>
               );
             })}
@@ -63,16 +79,25 @@ const Groups = () => {
         <View style={styles.infoCard}>
           <ScrollView horizontal>
             {choresData.map((chore) => {
-              return (
+              return chore.is_completed ? (
                 <View key={chore.chore_id} style={styles.cardContent}>
                   <View style={styles.userInfoSection}></View>
-                  <Text>{chore.chore_name}</Text>
+                  <Text style={styles.username}>{chore.chore_name}</Text>
                   <Text>Difficulty: {chore.difficulty}</Text>
                   <Text>Completed: {chore.is_completed}</Text>
-                  <Text>Votes: {chore.votes}</Text>
+                  <Text>Votes: {chore.votes + choreVotes}</Text>
                   <View style={styles.userInfoSection}></View>
+                  <Pressable
+                    style={styles.button}
+                    onPress={() => {
+                      const chore_id = chore.chore_id;
+                      patchChoreVotes(chore_id);
+                    }}
+                  >
+                    <Text>Like</Text>
+                  </Pressable>
                 </View>
-              );
+              ) : null;
             })}
           </ScrollView>
         </View>
@@ -88,7 +113,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
     backgroundColor: "#2F5D62",
-    height: 100,
+    height: 125,
     alignItems: "center",
   },
   infoCard: {
@@ -102,7 +127,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     shadowOpacity: 80,
     elevation: 15,
-    marginTop: -20,
+    marginTop: -40,
     marginBottom: 20,
   },
   avatarBackground: {
@@ -129,5 +154,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#5E8B7E",
     paddingTop: 10,
+  },
+  button: {
+    marginTop: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    width: 10,
+    backgroundColor: "#DFEEEA",
+  },
+  icon: {
+    marginRight: 5,
   },
 });
