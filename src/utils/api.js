@@ -10,6 +10,7 @@ import {
   where,
   deleteDoc,
   Timestamp,
+  FieldValue,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 
@@ -169,6 +170,12 @@ export const patchUserPoints = (userId, chorePoints) => {
     return updateDoc(doc(db, "users", userId), {
       points: updatePoints,
     });
+  });
+};
+
+export const patchChoreVotes = (chore_id) => {
+  return updateDoc(doc(db, "chores", chore_id), {
+    votes: 1,
   });
 };
 
