@@ -10,6 +10,7 @@ import {
   where,
   deleteDoc,
   Timestamp,
+  FieldValue,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase-config";
 
@@ -24,15 +25,18 @@ export const getUserDataById = (uid) => {
   });
 };
 
-export const getHouseholdbyUser = (householdId) => {
-  const userRef = doc(db, "households", householdId);
-
-  return getDoc(userRef).then((householdData) => {
-    if (householdData.data()) {
-      return householdData.data();
-    }
-    return Promise.reject(new Error("data not found"));
-  });
+export const getHouseholdbyUser = (uid) => {
+  return getUserDataById(uid)
+    .then((userData) => {
+      const householdID = userData.household_id;
+      return getDoc(doc(db, "households", householdID));
+    })
+    .then((householdData) => {
+      if (householdData.data()) {
+        return householdData.data();
+      }
+      return Promise.reject(new Error("data not found"));
+    });
 };
 
 export const postHousehold = (userId, householdName) => {
@@ -73,7 +77,7 @@ export const getChoresByHouseholdId = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "chores"),
-        where("household_id", "==", householdId),
+        where("household_id", "==", householdId)
       );
       return getDocs(q);
     })
@@ -111,7 +115,6 @@ export const postChore = (
 	});
 };
 
-
 export const patchChoreIsCompleted = (completedChoreId, isCompleted) => {
   const choreRef = doc(db, "chores", completedChoreId);
 
@@ -128,7 +131,7 @@ export const getUsersByHousehold = (currentUser) => {
       const householdId = userData.household_id;
       const q = query(
         collection(db, "users"),
-        where("household_id", "==", householdId),
+        where("household_id", "==", householdId)
       );
       return getDocs(q);
     })
@@ -150,14 +153,32 @@ export const getBadges = (badgeId) => {
     if (badges.data()) {
       return badges.data();
     }
-    return Promise.reject(new Error("user not found"));
+    return Promise.reject(new Error("badge not found"));
   });
 };
 
 export const deleteChore = (choreId) => {
   const choreRef = doc(db, "chores", choreId);
   return deleteDoc(choreRef);
-}
+};
+
+export const patchUserPoints = (userId, chorePoints) => {
+  getUserDataById(userId).then((data) => {
+    let updatePoints = data.points;
+    const pointsMultiplyer = 4;
+    updatePoints += chorePoints * pointsMultiplyer;
+
+    return updateDoc(doc(db, "users", userId), {
+      points: updatePoints,
+    });
+  });
+};
+
+export const patchChoreVotes = (chore_id) => {
+  return updateDoc(doc(db, "chores", chore_id), {
+    votes: 1,
+  });
+};
 
 // just here to show how to use function in profile
 

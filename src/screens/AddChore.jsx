@@ -16,6 +16,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import { Avatar } from "react-native-paper";
 
 const Addchore = () => {
+  
   const [choreName, setChoreName] = useState("");
   const [choreDescription, setChoreDescription] = useState("");
   const [openDifficulty, setOpenDifficulty] = useState(false);
@@ -32,9 +33,9 @@ const Addchore = () => {
     { label: "4", value: 4 },
     { label: "5", value: 5 },
   ]);
-  const [assignUserOpen, setAssignUserOpen] = useState(false);
+  
   const [assignUserOptions, setAssignUserOptions] = useState([]);
-  const [assignUser, setAssignUser] = useState("");
+  
   const [clickedUser, setClickedUser] = useState("");
 
   const currentUser = useContext(CurrentUserContext);
@@ -53,7 +54,6 @@ const Addchore = () => {
   }, []);
   console.log(userID);
   const addChore = () => {
-    console.log(clickedUser);
     postChore(userID, {
       choreName,
       choreDescription,
@@ -71,8 +71,7 @@ const Addchore = () => {
         alert("Your chore has been added");
       })
       .catch((err) => {
-        // alert(err);
-        console.log(err);
+        alert(err);
       });
   };
 
@@ -127,15 +126,7 @@ const Addchore = () => {
             setItems={setDifficulty}
           />
 
-          {/* <DropDownPicker
-					  placeholder="Select user to assign"
-            open={assignUserOpen}
-            value={assignUser}
-            items={assignUserOptions}
-            setOpen={setAssignUserOpen}
-            setValue={setAssignUser}
-            setItems={setAssignUserOptions}
-          /> */}
+         
           <ScrollView horizontal style={styles.userContainer}>
             {assignUserOptions.map((user) => {
               return (
@@ -171,7 +162,7 @@ const Addchore = () => {
   );
 };
 
-//TODOS when user posts a chore, if the chore has been posted it should indicate it to the user
+
 
 export default Addchore;
 

@@ -1,3 +1,6 @@
+//THIS PAGE IS NOT NEEDED ANYMORE. THIS PAGE CAN BE DELETED IN THE END!!! SIGN-OUT IS BEING USED IN THE PROFILE PAGE NOW
+
+
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Avatar, Title, Caption, TouchableRipple } from "react-native-paper";
