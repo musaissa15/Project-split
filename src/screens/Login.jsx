@@ -19,6 +19,9 @@ import { useTheme } from 'react-native-paper';
 import { auth } from '../../firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts, Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium, } from "@expo-google-fonts/poppins";
 
 
 
@@ -45,11 +48,11 @@ const Login = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView>
-      <LinearGradient colors={["#22577E", "#01ab9d"]} 
+      <LinearGradient colors={["#2F5D62", "#01ab9d"]} 
       style={styles.container}>
    
     <View style={styles.header}>
-      <Text style={styles.text_header}>Go Chores</Text>
+      <Text style={styles.text_header}>Our House</Text>
     </View>
     <View style={styles.footer}>
       <Text style={styles.text_footer}>Email </Text>
@@ -61,7 +64,7 @@ const Login = ({ navigation }) => {
       />
       <TextInput
           style={styles.textInput}
-          placeholder="Email"
+          placeholder="Please enter your Email"
           autoFocus
           autoCapitalize="none"
           value={email}
@@ -78,7 +81,7 @@ const Login = ({ navigation }) => {
       />
      <TextInput
           style={styles.textInput}
-          placeholder="Password"
+          placeholder="Please enter your Password"
           secureTextEntry={true}
           autoCapitalize="none"
           value={password}
@@ -89,7 +92,7 @@ const Login = ({ navigation }) => {
 <View style={styles.button}>
 
 <LinearGradient
-colors={["#22577E", "#01ab9d"]}
+colors={["#2F5D62", "#01ab9d"]}
 style={styles.signIn}>
     <TouchableOpacity
     onPress={signIn}>
@@ -144,6 +147,8 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       paddingHorizontal: 20,
       paddingBottom: 50,
+      fontFamily: "Poppins_400Regular",
+      
       
   },
   footer: {
@@ -152,63 +157,88 @@ const styles = StyleSheet.create({
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,
-      paddingVertical: 30
+      paddingVertical: 30,
+      fontFamily: "Poppins_400Regular",
   },
+
   text_header: {
-      color: '#fff',
-      fontWeight: 'bold',
-      fontSize: 50,
-      fontFamily: "Poppins",
+    flexDirection: "row",
+    justifyContent: "center",
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 50,
+    fontFamily: "Poppins_400Regular",
+    flex: -3,
+    textShadowOffset: {
+      height: 2,
+      width: 2,
+    },
+    textShadowColor: "#22577E",
+    textShadowRadius: 7,
+    textAlign: "center",
+   
   },
+
+
   text_footer: {
       color: '#05375a',
-      fontSize: 18
+      fontSize: 18,
+      fontWeight: 'bold',
+      fontFamily: "Poppins_400Regular",
   },
   action: {
       flexDirection: 'row',
       marginTop: 10,
       borderBottomWidth: 1,
       borderBottomColor: '#f2f2f2',
-      paddingBottom: 5
+      paddingBottom: 5,
+      fontFamily: "Poppins_400Regular",
   },
   actionError: {
       flexDirection: 'row',
       marginTop: 10,
       borderBottomWidth: 1,
       borderBottomColor: '#FF0000',
-      paddingBottom: 5
+      paddingBottom: 5,
+      fontFamily: "Poppins_400Regular",
   },
   textInput: {
       flex: 1,
       marginTop: Platform.OS === 'ios' ? 0 : -12,
       paddingLeft: 10,
       color: '#05375a',
+      fontFamily: "Poppins_400Regular",
   },
   errorMsg: {
       color: '#FF0000',
       fontSize: 14,
+      fontFamily: "Poppins_400Regular",
   },
   button: {
     alignItems: 'center',
-    marginTop: 50
+    marginTop: 50,
+    fontFamily: "Poppins_400Regular",
 },
 signIn: {
     width: '100%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10
+    borderRadius: 10,
+    fontFamily: "Poppins_400Regular",
 },
 textSign: {
     fontSize: 18,
     fontWeight: 'bold',
     alignItems: "center",
     justifyContent: 'center',
+    fontFamily: "Poppins_400Regular",
 },
 registerMessage: {
   marginTop: 20,
   marginBottom: -10,
   fontWeight: 'bold',
+  fontFamily: "Poppins_400Regular",
 },
   
 
