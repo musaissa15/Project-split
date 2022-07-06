@@ -87,26 +87,28 @@ export const getChoresByHouseholdId = (currentUser) => {
     });
 };
 
-export const postChore = (userId, {
-  choreName, choreDescription, difficulty, day, month, usersAssigned,
-}) => {
-  return getUserDataById(userId).then(({household_id}) => {
-    const currentYear = new Date().getFullYear();
-    const dueDate = new Date(currentYear, parseInt(month) - 1, parseInt(day));
-    const dueDateTimeStamp = Timestamp.fromDate(dueDate);
-    addDoc(collection(db, "chores"), {
-      chore_name: choreName,
-      description: choreDescription,
-      difficulty,
-      due_date: dueDateTimeStamp,
-      is_completed: false,
-      created_by: userId,
-      household_id,
-      image_url: "",
-      votes: 0,
-      users_assigned: usersAssigned,
-    });
-  });
+export const postChore = (
+	userId,
+	{ choreName, choreDescription, difficulty, day, month, clickedUser }
+) => {
+  console.log(clickedUser)
+	return getUserDataById(userId).then(({ household_id }) => {
+		const currentYear = new Date().getFullYear();
+		const dueDate = new Date(currentYear, parseInt(month) - 1, parseInt(day));
+		const dueDateTimeStamp = Timestamp.fromDate(dueDate);
+		addDoc(collection(db, "chores"), {
+			chore_name: choreName,
+			description: choreDescription,
+			difficulty,
+			due_date: dueDateTimeStamp,
+			is_completed: false,
+			created_by: userId,
+			household_id,
+			image_url: "",
+			votes: 0,
+			users_assigned: clickedUser,
+		});
+	});
 };
 
 

@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  ScrollView,
 } from "react-native";
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
@@ -12,11 +13,14 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { StatusBar } from "expo-status-bar";
 import { postChore, getUsersByHousehold } from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import { Avatar } from "react-native-paper";
 
 const Addchore = () => {
   const [choreName, setChoreName] = useState("");
   const [choreDescription, setChoreDescription] = useState("");
   const [openDifficulty, setOpenDifficulty] = useState(false);
+  const user = useContext(CurrentUserContext);
+  const userID = user.uid;
 
   const [difficultyValue, setDifficultyValue] = useState(false);
   const [day, setDay] = useState("");
@@ -31,37 +35,44 @@ const Addchore = () => {
   const [assignUserOpen, setAssignUserOpen] = useState(false);
   const [assignUserOptions, setAssignUserOptions] = useState([]);
   const [assignUser, setAssignUser] = useState("");
+  const [clickedUser, setClickedUser] = useState("");
 
   const currentUser = useContext(CurrentUserContext);
 
+  const checkClicked = (username) => {
+    if (clickedUser === username) {
+      setClickedUser("");
+    } else {
+      setClickedUser(username);
+    }
+  };
   useEffect(() => {
     getUsersByHousehold(currentUser).then((users) => {
-      setAssignUserOptions(
-        users.map((user) => {
-          return { label: user.username, value: user.username };
-        })
-      );
+      setAssignUserOptions(users);
     });
   }, []);
-
+  console.log(userID);
   const addChore = () => {
-    postChore("6b4fR5AjYiTTWXmpxiHGOISOUuv2", {
+    console.log(clickedUser);
+    postChore(userID, {
       choreName,
       choreDescription,
       difficulty: difficultyValue,
       day,
       month,
-      userAssigned: assignUser,
+      clickedUser,
     })
       .then(() => {
         setChoreName("");
         setChoreDescription("");
         setMonth("");
         setDay("");
+        setClickedUser("");
         alert("Your chore has been added");
       })
-      .catch(() => {
-        alert("Sorry something went wrong.Please try again ");
+      .catch((err) => {
+        // alert(err);
+        console.log(err);
       });
   };
 
@@ -106,8 +117,8 @@ const Addchore = () => {
 
         <View style={styles.difficultyDropdown}>
           <Text style={styles.difficultyFont}>Difficulty:</Text>
-				  <DropDownPicker
-					  placeholder="Select difficulty"
+          <DropDownPicker
+            placeholder="Select difficulty"
             open={openDifficulty}
             value={difficultyValue}
             items={difficulty}
@@ -116,7 +127,7 @@ const Addchore = () => {
             setItems={setDifficulty}
           />
 
-				  <DropDownPicker
+          {/* <DropDownPicker
 					  placeholder="Select user to assign"
             open={assignUserOpen}
             value={assignUser}
@@ -124,7 +135,33 @@ const Addchore = () => {
             setOpen={setAssignUserOpen}
             setValue={setAssignUser}
             setItems={setAssignUserOptions}
-          />
+          /> */}
+          <ScrollView horizontal style={styles.userContainer}>
+            {assignUserOptions.map((user) => {
+              return (
+                <Pressable
+                  key={user.username}
+                  style={{
+                    backgroundColor: clickedUser === user.username ? "red" : "",
+                  }}
+                  onPress={() => {
+                    checkClicked(user.username);
+                  }}
+                >
+                  <View style={styles.userText}>
+                    <Text style={styles.userText}> {user.username}</Text>
+                    <Avatar.Image
+                      style={styles.avatarBackground}
+                      source={{
+                        uri: user.avatar_url,
+                      }}
+                      size={80}
+                    />
+                  </View>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
         </View>
         <Pressable style={styles.button} onPress={addChore}>
           <Text style={styles.text}>Add</Text>
@@ -196,5 +233,16 @@ const styles = StyleSheet.create({
   },
   difficultyFont: {
     fontSize: "large",
+  },
+  userClicked: {
+    backgroundColor: "white",
+  },
+  userText: {},
+  avatarBackground: {
+    backgroundColor: "#5E8B7E",
+    paddingTop: 10,
+  },
+  userContainer: {
+    marginRight: 100,
   },
 });
