@@ -46,9 +46,6 @@ const styles = StyleSheet.create({
     height: 125,
     alignItems: "center",
   },
-  back: {
-    backgroundColor: "#DFEEEA",
-  },
   heading: {
     fontSize: 25,
     fontWeight: "bold",
