@@ -12,6 +12,7 @@ import Login from "./src/screens/Login";
 import CurrentUserContext from "./src/contexts/CurrentUserContext";
 import SetupHousehold from "./src/screens/SetupHousehold";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,22 +21,24 @@ export default function App() {
     headerStyle: { backgroundColor: "#00061A" },
     headerTitleStyle: { color: "white" },
     headerTintColor: "white",
+    headerShown: "false",
+    fontFamily: "Poppins_400Regular",
   };
-  
-  const [currentUser, setCurrentUser] = useState({})
-  
+
+  const [currentUser, setCurrentUser] = useState({});
+
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setCurrentUser(user)
-      });
-    
-    return unsubscribe
-  }, [])
+      setCurrentUser(user);
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
     <NavigationContainer>
-      <CurrentUserContext.Provider value={currentUser} >
+      <CurrentUserContext.Provider value={currentUser}>
         <Stack.Navigator
           screenOptions={globalScreenOptions}
           initialRouteName="Welcome"
