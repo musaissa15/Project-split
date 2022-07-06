@@ -1,20 +1,12 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  FontAwesome,
-  Feather,
-  Entypo,
-  Ionicons,
-} from "@expo/vector-icons";
+import { Feather, Entypo, Ionicons, AntDesign } from "@expo/vector-icons";
 import Profile from "./Profile";
 import Groups from "./Groups";
 import Chores from "./Chores";
 import AddChore from "./AddChore";
 import SettingsScreen from "./SettingsScreen";
-
 
 const Tab = createBottomTabNavigator();
 
@@ -25,9 +17,10 @@ const MyTabs = () => {
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: true,
-        tabBarStyle: {backgroundColor: "#A7C4BC"},
-        tabBarInactiveTintColor: "#fff", 
+        tabBarStyle: { backgroundColor: "#A7C4BC" },
+        tabBarInactiveTintColor: "#fff",
         tabBarActiveTintColor: "black",
+        headerShown: false,
       }}
     >
       <Tab.Screen
@@ -48,17 +41,6 @@ const MyTabs = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="people-outline" color={color} size={size} />
           ),
-          // tabBarBadge: 3,
-        }}
-      />
-      <Tab.Screen
-        name="Chores"
-        component={Chores}
-        options={{
-          tabBarLabel: "Chores",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="list-outline" color={color} size={size} />
-          ),
         }}
       />
       <Tab.Screen
@@ -67,12 +49,22 @@ const MyTabs = () => {
         options={{
           tabBarLabel: "Add Chore",
           tabBarIcon: ({ color, size }) => (
-            <Entypo name="add-to-list" color={color} size={size} />
+            <Ionicons name="add-circle-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Chores"
+        component={Chores}
+        options={{
+          tabBarLabel: "Chores",
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="home" color={color} size={size} />
           ),
         }}
       />
 
-<Tab.Screen
+      <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
@@ -82,15 +74,10 @@ const MyTabs = () => {
           ),
         }}
       />
-
-
-      
     </Tab.Navigator>
   );
 };
 
 export default MyTabs;
 
-const styles = StyleSheet.create({
- 
-});
+const styles = StyleSheet.create({});
