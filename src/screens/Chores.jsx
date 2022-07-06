@@ -1,27 +1,44 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Switch } from "react-native";
 import React, { useState, useEffect } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
-import { getChoresByHouseholdId } from "../utils/api";
+import { getChoresByHouseholdId, getUserDataById } from "../utils/api";
 import ChoreCard from "./ChoreCard";
 import { ScrollView } from "react-native-gesture-handler";
 
 const Chores = () => {
   const currentUser = React.useContext(CurrentUserContext);
   const [householdChores, setHouseholdChores] = useState([]);
+  const [isMyChores, setIsMyChores] = useState(false);
+  const [currentUserData, setCurrentUserData] = useState({})
+  
+  const myChores = householdChores.filter((chore) => chore.users_assigned === currentUserData.username)
+  
+  const toggleChores = () => setIsMyChores(previousState => !previousState);
 
   useEffect(() => {
     getChoresByHouseholdId(currentUser).then((chores) => {
       setHouseholdChores(chores);
     });
+    getUserDataById(currentUser.uid).then((userData) => {
+      setCurrentUserData(userData);
+    })
   }, []);
 
   return (
     <ScrollView style={styles.back}>
       <View style={styles.banner}>
-        <Text style={[styles.cardContent, styles.heading]}>All chores</Text>
+        <Text style={[styles.cardContent, styles.heading]}>{isMyChores ? "My chores" : "All chores"}</Text>
       </View>
       <View style={styles.listChores}>
-        {householdChores.map((chore) => {
+      <View>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isMyChores ? "#f5dd4b" : "#f4f3f4"} 
+            onValueChange={toggleChores}
+            value={isMyChores}
+          />
+        </View>
+        {(isMyChores ? myChores : householdChores).map((chore) => {
           return (
             <ChoreCard
               chore={chore}
