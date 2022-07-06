@@ -1,5 +1,3 @@
-
-
 import {
   StyleSheet,
   Text,
@@ -18,6 +16,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts, Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium, } from "@expo-google-fonts/poppins";
 
 
 
@@ -26,7 +27,7 @@ const WelcomeScreen = ({ navigation }) => {
   return (
 
     <LinearGradient
-        colors={["#22577E", "#01ab9d"]}
+        colors={["#2F5D62", "#01ab9d"]}
         style={styles.container}
        >
        <View style={styles.header}>
@@ -40,11 +41,12 @@ const WelcomeScreen = ({ navigation }) => {
 
 
 <View style={styles.footer}>
-<Text style={styles.title}>Welcome to Go Chores</Text>
+<Text style={styles.title}>Welcome to</Text>
+<Text style={styles.subtitle}>Our House</Text>
 
 <TouchableOpacity onPress={() => navigation.navigate("Login")}>
  <LinearGradient
- colors={["#22577E", "#01ab9d"]}
+ colors={["#2F5D62", "#01ab9d"]}
  style={styles.signIn}
  >
   <Text style={styles.textSign}>Get Started</Text>
@@ -67,7 +69,7 @@ export default WelcomeScreen;
 
 
 const {height} = Dimensions.get("screen");
-const height_logo = height * 0.28;
+const height_logo = height * 0.48;
 
 
 
@@ -96,16 +98,31 @@ logo: {
 },
 title: {
   color: 'black',
-  fontSize: 30,
-  fontWeight: 'bold',
-  fontFamily: "Poppins",
+  fontSize: 50,
+  fontFamily: "Poppins_400Regular",
   flex: 1,
 },
 
+subtitle: {
+  flexDirection: "row",
+  justifyContent: "center",
+  color: 'black',
+  fontSize: 60,
+  fontWeight: 'bold',
+  fontFamily: "Poppins_400Regular",
+  flex: 6,
+  textShadowOffset: {
+    height: 2,
+    width: 2,
+  },
+  textShadowColor: "#22577E",
+  textShadowRadius: 7,
+  textAlign: "center",
+ 
+},
 textSign: {
   color: 'white',
   fontWeight: 'bold',
-  
       justifyContent: 'center',
       alignItems: 'center',
 },
