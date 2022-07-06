@@ -109,12 +109,12 @@ const SetupProfile = ({ navigation }) => {
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.text_footer}>FIRSTNAME </Text>
+          <Text style={styles.text_footer}></Text>
           <View style={styles.action}>
             <FontAwesome name="user-o" color={colors.text} size={20} />
             <TextInput
               style={styles.textInput}
-              placeholder="Please ENTER your FIRSTNAME"
+              placeholder="FIRSTNAME"
               autoFocus
               autoCapitalize="none"
               value={firstname}
@@ -122,12 +122,12 @@ const SetupProfile = ({ navigation }) => {
             />
           </View>
 
-          <Text style={[styles.text_footer, { marginTop: 60 }]}>SURNAME </Text>
+          <Text style={[styles.text_footer, { marginTop: 60 }]}></Text>
           <View style={styles.action}>
             <FontAwesome name="user" color={colors.text} size={20} />
             <TextInput
               style={styles.textInput}
-              placeholder="Please ENTER your SURNAME"
+              placeholder="SURNAME"
               autoFocus
               autoCapitalize="none"
               value={surname}
@@ -135,12 +135,12 @@ const SetupProfile = ({ navigation }) => {
             />
           </View>
 
-          <Text style={[styles.text_footer, { marginTop: 60 }]}>USERNAME</Text>
+          <Text style={[styles.text_footer, { marginTop: 60 }]}></Text>
           <View style={styles.action}>
             <FontAwesome name="id-badge" color={colors.text} size={20} />
             <TextInput
               style={styles.textInput}
-              placeholder="Please ENTER your USERNAME"
+              placeholder="USERNAME"
               autoFocus
               autoCapitalize="none"
               value={username}
@@ -149,7 +149,7 @@ const SetupProfile = ({ navigation }) => {
           </View>
 
           <Text style={[styles.text_footer, { marginTop: 60 }]}>
-            SELECT A PROFILE PHOTO
+            PROFILE PHOTO
           </Text>
           <View style={styles.action}>
             <DropDownPicker
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: 'bold',
     fontFamily: "Poppins_400Regular",
-    flex: -1,
+    flex: 1,
     textShadowOffset: {
       height: 2,
       width: 2,

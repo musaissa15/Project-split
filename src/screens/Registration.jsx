@@ -152,7 +152,7 @@ text_header: {
   fontWeight: 'bold',
   fontSize: 50,
   fontFamily: "Poppins_400Regular",
-  flex: -3,
+  flex: 1,
   textShadowOffset: {
     height: 2,
     width: 2,

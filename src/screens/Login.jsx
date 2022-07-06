@@ -124,7 +124,6 @@ style={styles.signIn}>
 <View style={{ height: 100 }} />
       </View>
       </LinearGradient>
-
 </KeyboardAvoidingView>
 
 
@@ -164,11 +163,11 @@ const styles = StyleSheet.create({
   text_header: {
     flexDirection: "row",
     justifyContent: "center",
-    color: 'black',
+    color: "#DFEEEA",
     fontWeight: 'bold',
     fontSize: 50,
     fontFamily: "Poppins_400Regular",
-    flex: -3,
+    flex: 3,
     textShadowOffset: {
       height: 2,
       width: 2,
@@ -236,7 +235,7 @@ textSign: {
 },
 registerMessage: {
   marginTop: 20,
-  marginBottom: -10,
+  marginBottom: 10,
   fontWeight: 'bold',
   fontFamily: "Poppins_400Regular",
 },
