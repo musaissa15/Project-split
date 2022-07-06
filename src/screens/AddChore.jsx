@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  ScrollView,
 } from "react-native";
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
@@ -12,8 +13,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { StatusBar } from "expo-status-bar";
 import { postChore, getUsersByHousehold } from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import { Avatar } from "react-native-paper";
 
 const Addchore = () => {
+  
   const [choreName, setChoreName] = useState("");
   const [choreDescription, setChoreDescription] = useState("");
   const [openDifficulty, setOpenDifficulty] = useState(false);
@@ -30,22 +33,26 @@ const Addchore = () => {
     { label: "4", value: 4 },
     { label: "5", value: 5 },
   ]);
-  const [assignUserOpen, setAssignUserOpen] = useState(false);
+  
   const [assignUserOptions, setAssignUserOptions] = useState([]);
-  const [assignUser, setAssignUser] = useState("");
+  
+  const [clickedUser, setClickedUser] = useState("");
 
   const currentUser = useContext(CurrentUserContext);
 
+  const checkClicked = (username) => {
+    if (clickedUser === username) {
+      setClickedUser("");
+    } else {
+      setClickedUser(username);
+    }
+  };
   useEffect(() => {
     getUsersByHousehold(currentUser).then((users) => {
-      setAssignUserOptions(
-        users.map((user) => {
-          return { label: user.username, value: user.username };
-        })
-      );
+      setAssignUserOptions(users);
     });
   }, []);
-
+  console.log(userID);
   const addChore = () => {
     postChore(userID, {
       choreName,
@@ -53,13 +60,14 @@ const Addchore = () => {
       difficulty: difficultyValue,
       day,
       month,
-      userAssigned: assignUser,
+      clickedUser,
     })
       .then(() => {
         setChoreName("");
         setChoreDescription("");
         setMonth("");
         setDay("");
+        setClickedUser("");
         alert("Your chore has been added");
       })
       .catch((err) => {
@@ -118,15 +126,33 @@ const Addchore = () => {
             setItems={setDifficulty}
           />
 
-          <DropDownPicker
-            placeholder="Select user to assign"
-            open={assignUserOpen}
-            value={assignUser}
-            items={assignUserOptions}
-            setOpen={setAssignUserOpen}
-            setValue={setAssignUser}
-            setItems={setAssignUserOptions}
-          />
+         
+          <ScrollView horizontal style={styles.userContainer}>
+            {assignUserOptions.map((user) => {
+              return (
+                <Pressable
+                  key={user.username}
+                  style={{
+                    backgroundColor: clickedUser === user.username ? "red" : "",
+                  }}
+                  onPress={() => {
+                    checkClicked(user.username);
+                  }}
+                >
+                  <View style={styles.userText}>
+                    <Text style={styles.userText}> {user.username}</Text>
+                    <Avatar.Image
+                      style={styles.avatarBackground}
+                      source={{
+                        uri: user.avatar_url,
+                      }}
+                      size={80}
+                    />
+                  </View>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
         </View>
         <Pressable style={styles.button} onPress={addChore}>
           <Text style={styles.text}>Add</Text>
@@ -136,7 +162,7 @@ const Addchore = () => {
   );
 };
 
-//TODOS when user posts a chore, if the chore has been posted it should indicate it to the user
+
 
 export default Addchore;
 
@@ -198,5 +224,16 @@ const styles = StyleSheet.create({
   },
   difficultyFont: {
     fontSize: "large",
+  },
+  userClicked: {
+    backgroundColor: "white",
+  },
+  userText: {},
+  avatarBackground: {
+    backgroundColor: "#5E8B7E",
+    paddingTop: 10,
+  },
+  userContainer: {
+    marginRight: 100,
   },
 });
