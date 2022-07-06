@@ -53,7 +53,6 @@ export default function App() {
           <Stack.Screen name="App" component={MyTabs} />
           <Stack.Screen name="Setup" component={SetupProfile} />
           <Stack.Screen name="Setup Household" component={SetupHousehold} />
-
           <Stack.Screen name="Chat" component={Chat} options={({route}) => ({
             title: route.params.userName})} /> 
             <Stack.Screen name="msg" component={msg} />
