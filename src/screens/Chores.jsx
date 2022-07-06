@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import { getChoresByHouseholdId } from "../utils/api";
 import ChoreCard from "./ChoreCard";
@@ -10,7 +10,7 @@ const Chores = () => {
   const currentUser = React.useContext(CurrentUserContext);
   const [householdChores, setHouseholdChores] = useState([]);
 
-  useFocusEffect(() => {
+  useEffect(() => {
     getChoresByHouseholdId(currentUser).then((chores) => {
       setHouseholdChores(chores);
     });
