@@ -25,8 +25,7 @@ import { useFonts, Poppins_400Regular,
 const WelcomeScreen = ({ navigation }) => {
   const { colors } = useTheme();
   return (
-
-    <LinearGradient
+ <LinearGradient
         colors={["#2F5D62", "#01ab9d"]}
         style={styles.container}
        >

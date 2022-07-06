@@ -12,7 +12,11 @@ import Login from "./src/screens/Login";
 import CurrentUserContext from "./src/contexts/CurrentUserContext";
 import SetupHousehold from "./src/screens/SetupHousehold";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { useFonts, Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium, } from "@expo-google-fonts/poppins";
+import msg from "./src/screens/msg";
+import Chat from "./src/screens/Chat";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +53,11 @@ export default function App() {
           <Stack.Screen name="App" component={MyTabs} />
           <Stack.Screen name="Setup" component={SetupProfile} />
           <Stack.Screen name="Setup Household" component={SetupHousehold} />
+
+          <Stack.Screen name="Chat" component={Chat} options={({route}) => ({
+            title: route.params.userName})} /> 
+            <Stack.Screen name="msg" component={msg} />
+
         </Stack.Navigator>
       </CurrentUserContext.Provider>
     </NavigationContainer>
