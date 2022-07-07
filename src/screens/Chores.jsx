@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Switch } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import { getChoresByHouseholdId, getUserDataById } from "../utils/api";
 import ChoreCard from "./ChoreCard";
 import { ScrollView } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Chores = () => {
   const currentUser = React.useContext(CurrentUserContext);
@@ -15,14 +16,16 @@ const Chores = () => {
   
   const toggleChores = () => setIsMyChores(previousState => !previousState);
 
-  useEffect(() => {
-    getChoresByHouseholdId(currentUser).then((chores) => {
-      setHouseholdChores(chores);
-    });
-    getUserDataById(currentUser.uid).then((userData) => {
-      setCurrentUserData(userData);
-    })
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getChoresByHouseholdId(currentUser).then((chores) => {
+        setHouseholdChores(chores);
+      });
+      getUserDataById(currentUser.uid).then((userData) => {
+        setCurrentUserData(userData);
+      })
+    }, [])
+  );
 
   return (
     <ScrollView style={styles.back}>
@@ -63,9 +66,6 @@ const styles = StyleSheet.create({
     height: 125,
     alignItems: "center",
   },
-  back: {
-    backgroundColor: "#DFEEEA",
-  },
   heading: {
     fontSize: 25,
     fontWeight: "bold",
@@ -76,5 +76,5 @@ const styles = StyleSheet.create({
   },
   listChores: {
     marginTop: -60,
-  }
+  },
 });
