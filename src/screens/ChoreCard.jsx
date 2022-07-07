@@ -20,10 +20,6 @@ const ChoreCard = ({ chore, householdChores, setHouseholdChores }) => {
     setPointsModalVisible(true);
   };
 
-  // useEffect(() => {
-
-  // }, [])
-
   return (
     <SafeAreaView style={styles.page}>
       {checked ? (
@@ -84,26 +80,15 @@ export default ChoreCard;
 const styles = StyleSheet.create({
   container: {
     flex: 3,
-    marginHorizontal: 16,
+    marginHorizontal: 18,
     marginTop: 16,
     alignItems: "center",
     justifyContent: "center",
   },
   choreCard: {
     width: "100%", //p and m 0 - no difference
+    borderRadius: 10,
   },
-  // cardContent: {
-  //   padding: 0,
-  //   margin: 0,
-  //   borderWidth: 3,
-  //   borderColor: "black",
-  // },
-  // list: {
-  //   padding: 0,
-  //   margin: 0,
-  //   borderWidth: 3,
-  //   borderColor: "black",
-  // },
   checkbox: {
     justifyContent: "space-around",
   },

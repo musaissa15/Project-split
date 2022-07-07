@@ -1,33 +1,63 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import { getChoresByHouseholdId } from "../utils/api";
 import ChoreCard from "./ChoreCard";
 import { ScrollView } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Chores = () => {
   const currentUser = React.useContext(CurrentUserContext);
   const [householdChores, setHouseholdChores] = useState([]);
 
-  useEffect(() => {
-    getChoresByHouseholdId(currentUser).then((chores) => {
-      setHouseholdChores(chores);
-    });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getChoresByHouseholdId(currentUser).then((chores) => {
+        setHouseholdChores(chores);
+      });
+    }, [])
+  );
 
   return (
-      <ScrollView style={styles.back}>
-      {householdChores.map((chore) => {
-        return <ChoreCard chore={chore} householdChores={householdChores} setHouseholdChores={setHouseholdChores} key={chore.chore_id} />;
-      })}
-      </ScrollView> 
+    <ScrollView style={styles.back}>
+      <View style={styles.banner}>
+        <Text style={[styles.cardContent, styles.heading]}>All chores</Text>
+      </View>
+      <View style={styles.listChores}>
+        {householdChores.map((chore) => {
+          return (
+            <ChoreCard
+              chore={chore}
+              householdChores={householdChores}
+              setHouseholdChores={setHouseholdChores}
+              key={chore.chore_id}
+            />
+          );
+        })}
+      </View>
+    </ScrollView>
   );
 };
 
 export default Chores;
 
 const styles = StyleSheet.create({
-  back: {
+  banner: {
+    padding: 10,
+    width: "100%",
     backgroundColor: "#2F5D62",
-  }
+    height: 125,
+    alignItems: "center",
+  },
+  heading: {
+    fontSize: 25,
+    fontWeight: "bold",
+    padding: 10,
+    marginTop: 10,
+    color: "white",
+    alignItems: "center",
+  },
+  listChores: {
+    marginTop: -60,
+  },
 });
