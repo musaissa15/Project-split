@@ -22,7 +22,7 @@ const Groups = () => {
   const [usersData, setUsersData] = useState([]);
   const [choresData, setChoresData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [choreVotes, setChoreVotes] = useState(0);
+  // const [choreVotes, setChoreVotes] = useState(0);
 
   useEffect(() => {
     getUsersByHousehold(currentUser).then((users) => {
@@ -85,13 +85,25 @@ const Groups = () => {
                   <Text style={styles.username}>{chore.chore_name}</Text>
                   <Text>Difficulty: {chore.difficulty}</Text>
                   <Text>Completed: {chore.is_completed}</Text>
-                  <Text>Votes: {chore.votes + choreVotes}</Text>
+                  <Text>Votes: {chore.votes}</Text>
                   <View style={styles.userInfoSection}></View>
                   <Pressable
                     style={styles.button}
                     onPress={() => {
                       const chore_id = chore.chore_id;
-                      patchChoreVotes(chore_id);
+                      const addOne = chore.votes += 1;
+                      chore.votes = addOne;
+                      
+                      setChoresData((currentChores) => {
+                        return currentChores.map((currentChore) => {
+                          if(currentChore === chore.chore_id) {
+                            currentChore.votes++
+                            console.log(currentChore);
+                          }
+                          return currentChore
+                        })
+                      });
+                      patchChoreVotes(chore_id, addOne);
                     }}
                   >
                     <Text>Like</Text>
