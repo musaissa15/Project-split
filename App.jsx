@@ -45,7 +45,7 @@ export default function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Stack.Navigator
 					screenOptions={globalScreenOptions}
-					initialRouteName="Setup Household"
+					initialRouteName="welcome"
 				>
 					<Stack.Screen name="Login" component={Login} />
 					<Stack.Screen name="Welcome" component={WelcomeScreen} />
