@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import { getChoresByHouseholdId } from "../utils/api";
 import ChoreCard from "./ChoreCard";
@@ -10,11 +10,13 @@ const Chores = () => {
   const currentUser = React.useContext(CurrentUserContext);
   const [householdChores, setHouseholdChores] = useState([]);
 
-  useEffect(() => {
-    getChoresByHouseholdId(currentUser).then((chores) => {
-      setHouseholdChores(chores);
-    });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getChoresByHouseholdId(currentUser).then((chores) => {
+        setHouseholdChores(chores);
+      });
+    }, [])
+  );
 
   return (
     <ScrollView style={styles.back}>
@@ -57,5 +59,5 @@ const styles = StyleSheet.create({
   },
   listChores: {
     marginTop: -60,
-  }
+  },
 });
