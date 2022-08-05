@@ -8,11 +8,23 @@ The idea for Our House comes from our personal experiences and provides a soluti
 
 ## Installation
 
-Follow the instructions below to configure and run your own instance of Our House.
+Follow the instructions below to configure and run your own local instance of Our House.
 
 ### Requirements
 
-This project was built using React Native, Firebase Auth and uses Cloud Firestore. The project requires Node.js (v16.0) and npm (v8.13).
+This project was built using React Native, Firebase Auth and uses Cloud Firestore. The project requires **Node.js (v16.0.0)**, **npm (v8.13)** and **expo-cli**.
+
+Ensure you are running v16.0.0 of node by running: 
+```
+node -v
+```
+The easiest way to change your version of node is using NVM. [Check here for instructions](https://npm.github.io/installation-setup-docs/installing/using-a-node-version-manager.html).
+
+Install expo-cli globally using:
+
+```
+npm install -g expo-cli
+```
 
 ### Installation
 
@@ -41,7 +53,7 @@ To run the app locally, run:
 npm run web
 ```
 
-The app should now be available on [https://localhost:19006](https://localhost:19006).
+The app should now be available on [https://localhost:19006](https://localhost:19006). 
 
 The terminal will display a QR code. Scanning this on any android or ios device will launch the app on your mobile device. Note, the `Expo Go` app should be installed on your device.
 
